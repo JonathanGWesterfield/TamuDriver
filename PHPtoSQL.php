@@ -183,6 +183,74 @@ function ReformatDate($date)
 	
 }
 
+
+  
+// Functions for Generating Bar Graph
+  
+// GetDatesOfPastWeek
+// Returns an array with the date from a week ago, the current date,
+// and an array containing all dates within this week
+function GetDatesOfPastWeek()
+{
+  	$dates = array("","","","","","","");
+	
+	// Get Start and End Dates
+	$today = strtotime("today");
+	$previousWeek = strtotime("-1 week", $today);
+	
+	// Format dates to match SQL syntax
+	$startDate = date("Y-m-d", $previousWeek) . " " . "00:00:00";
+	$endDate = date("Y-m-d") . " " . "00:00:00"; 
+	
+	//fill the array in ascending order (most recent date is last)
+	for($i = 0; $i < 7; $i++)
+	{
+		$dayName = "-1 week +" .$i. " day";
+		$dates[$i] = date("Y-m-d", strtotime($dayName, $today));
+	}
+	
+	return array($startDate, $endDate, $dates);
+
+}
+
+// GetTrafficCountForDates
+// Returns an array that contains the traffic count for each day 
+// in the input array of dates 
+function GetTrafficCountForDates($results, $dates)
+{
+	$countByDay = array(0,0,0,0,0,0,0);
+	
+	// Fetch results row by row until there are no rows left
+	while($row = $results->fetch(PDO::FETCH_ASSOC)) {
+		$index = 6; // last index of array (to get the most recent day)
+		
+		// Trim the date to the string "YYYY-MM-DD"
+		$startTime = substr($dates[$index], 0, 10);
+
+		// Get the date of the current row and trim to format "YYYY-MM-DD"
+		$currentRowDate = substr($row[entryTime], 0, 10);
+		
+		// If row date is equal to the last element of the date array,
+		// increment the count for the corresponding element
+		if($currentRowDate == $startTime){
+			$countByDay[$index] = $countByDay[$index] + 1;
+		} 
+		else{
+		    // Find the corresponding position in the count array for the row date 
+			while($currentRowDate != $startTime && $index > 0){
+				$index = $index - 1;
+				$startTime = substr($dates[$index], 0, 10);
+			}
+			
+			// Increment the count for the element
+			if($index >= 0){
+				$countByDay[$index] = $countByDay[$index] + 1;
+			}
+		}
+	}
+	
+
+
 ?>
 
 <html>
