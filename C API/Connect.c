@@ -2,13 +2,15 @@
 #include <stdlib.h>
 #include <mysql.h>
 #include <string.h>
+#include <math.h>
 
 static char *host = "database.cse.tamu.edu";
 static char *user = "jgwesterfield";
 static char *pass = "Whoop19!";
 static char *dbname = "jgwesterfield-TamuDriver";
 
-typedef enum { false, true } bool;
+// define a boolean since C doesn't have them */
+typedef enum {false, true} bool;
 
 unsigned int port = 3306;
 static char *unix_socket = NULL;
@@ -77,43 +79,29 @@ void closeConnection()
  * @param inOrOut - A boolean value. Therefore, 1 is true and 0 is false. 1 Means entering & 0 means exiting.
  * @param location - Whether we are at one parking lot or a different one
  */
-void insert(bool inOrOut, char location[])
+void insert(bool inOrOut, char* location)
 {
-	MYSQL_STMT *stmt;
-    char query[] = "INSERT INTO WalkerData (Location, InOrOut, WeekDay, DateTime) VALUES (\"";
-    strncat(query, location, 1);
-    strncat(query, "\", ", 1);
-    strncat(query, inOrOut, 1);
-    strncat(query, ", dayofweek(now()), now())", 1);
+    printf("Attempting to format SQL String\n");
+    char* query;
+    sprintf(query, "INSERT INTO DriverData (location, InOrOut, weekDay, entryTime) VALUES (\"%s\", %d, dayofweek(now()), now())", location, inOrOut);
 
-    stmt = mysql_stmt_init(conn);
+    printf("The SQL string: \n%s\n", query);
 
-    if (stmt) 
+    if (mysql_query(conn, query))
     {
-      	printf("Statement init OK!");
-    } 
-    else 
+        fprintf(stderr, "\nERROR: %s[%d]\n", mysql_error(conn), mysql_errno(conn));
+    }
+    else
     {
-      	fprintf(stderr, "Statement init failed: %s[%d]\n", mysql_error(conn), mysql_errno(conn));
+        printf("Sucessfully Inserted to database: %s\n", query);
     }
 
-    if (stmt) 
-    {                   
-		if (mysql_stmt_prepare(stmt, query, sizeof(query))) 
-		{
-			printf("Statement prepare failed: %s[%d]\n", mysql_stmt_error(stmt), mysql_errno(conn));
-      	} 
-      	else 
-      	{
-			puts("Statement prepare OK!");
-      	}
-                        
-      	mysql_stmt_close(stmt);
-    }
+    return;
 }
+
 /**
 	Working compile command
-	gcc -o connect -I /usr/local/Cellar/mysql-connector-c/6.1.11/include Connect.c -L/usr/local/Cellar/mysql-connector-c/6.1.11/lib -lmysqlclient   
+	gcc -o connect -I /usr/local/Cellar/mysql-connector-c/6.1.11/include Connect.c -L/usr/local/Cellar/mysql-connector-c/6.1.11/lib -lmysqlclient
 
 
 	Better Working compile option
