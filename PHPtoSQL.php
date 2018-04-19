@@ -17,6 +17,8 @@
 ***********************************************/
 
 include('CommonMethods.php');
+class PHPtoSQL
+{
 
 // ExecuteQuery
 // Given two input times for the time range, return the query results
@@ -40,132 +42,136 @@ function ConvertTime($Time)
 function PrintResults($results)
 {
 	$count = 0;
-	while($row = $results->fetch(PDO::FETCH_ASSOC)) {
-	  echo("<tr>");
-		echo("<td>" . $row['entryNumber'] . "</td>");
+	while($row = $results->fetch(PDO::FETCH_ASSOC))
+	{
+	    echo("<tr>");
+	    echo("<td>" . $row['entryNumber'] . "</td>");
 		$count = $count + 1;
 		echo("<td>" . $row['entryTime'] . "</td>");
-	  echo("</tr>");
+	    echo("</tr>");
 	}
 	echo ("<p>Traffic count in selected range: " . $count . "</p>");
 
 }
 
 // GroupResultsByHour
-// Given query results, count number of results in each hour and return array 
+// Given query results, count number of results in each hour and return array
 // containing an array of the traffic counted in each hour and a corresponding array with
 // dates within time range grouped by hour
-function GroupResultsByHour($results) 
+function GroupResultsByHour($results)
 {
   	// Get first date in results
   	$row = $results->fetch(PDO::FETCH_ASSOC);
   	$firstTime = $row[entryTime];
-  	
+
   	// Format first date by "YYYY-MM-DD HH"
-  	$formattedTimeMarker = substr($firstTime, 0, 13); 
-  	
+  	$formattedTimeMarker = substr($firstTime, 0, 13);
+
   	$countByHour = array(0);
   	$dateByHour = array($formattedTimeMarker);
   	$index = 0; // use to access first element of array
-  	
-  	while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
+
+  	while ($row = $results->fetch(PDO::FETCH_ASSOC))
+  	{
   		// Format first date by "YYYY-MM-DD HH"
-  		$formattedRowTime = substr($row[entryTime], 0, 13); 
-  		
+  		$formattedRowTime = substr($row[entryTime], 0, 13);
+
   		// Increment the element in the count array corresponding to the matching date
-  		if ($formattedRowTime == $formattedTimeMarker) {
+  		if ($formattedRowTime == $formattedTimeMarker)
+  		{
   			$countByHour[$index] = $countByHour[$index] + 1;
   		}
-  		else {
-  			$formattedTimeMarker = $formattedRowTime;
-  			array_push($dateByHour,$formattedRowTime);
-  			array_push($countByHour,1);
-  			$index = $index + 1;
-  		}
+  		else
+        {
+            $formattedTimeMarker = $formattedRowTime;
+            array_push($dateByHour,$formattedRowTime);
+            array_push($countByHour,1);
+            $index = $index + 1;
+        }
   	}
-  	
+
   	return array($countByHour, $dateByHour);
 }
-  
+
 // GetMinimumCountInHour
 // Given an array of dates grouped by hour and corresponding array of counts in each hour,
 // return the minimum count and corresponding hour
-function GetMinimumCountInHour($countByHour, $dateByHour) 
+function GetMinimumCountInHour($countByHour, $dateByHour)
 {
   	// Find minimum element in array
   	$minCountByHour = min($countByHour);
-  	
+
   	// Get element in date array corresponding to the minimum element in count array
   	$index = array_search(min($countByHour), $countByHour);
   	$dateOfMinHour = $dateByHour[$index];
-  	
-  	return array($minCountByHour, $dateOfMinHour);	
-  
+
+  	return array($minCountByHour, $dateOfMinHour);
+
 }
 
 // GetMedianCountInHour
 // Given an array of dates grouped by hour and corresponding array of counts in each hour,
 // return the median count and corresponding hour
-function GetMedianCountInHour($countByHour, $dateByHour) 
+function GetMedianCountInHour($countByHour, $dateByHour)
 {
-  	// Sort array of counts 
+  	// Sort array of counts
   	$sortedCountByHour = $countByHour;
 	rsort($sortedCountByHour);
-	
-	// find middle index of orignal array 
+
+	// find middle index of orignal array
 	$midIndex = round(count($sortedCountByHour)/2);
 	$median = $sortedCountByHour[$midIndex - 1];
-  	
+
   	// Get element in date array corresponding to the median element in count array
   	$index = array_search($median, $countByHour);
   	$dateOfMedianHour = $dateByHour[$index];
-  	return array($median, $dateOfMedianHour);	
-  
+  	return array($median, $dateOfMedianHour);
+
 }
 
 // GetMaximumCountInHour
 // Given an array of dates grouped by hour and corresponding array of counts in each hour,
-// return the maximum count and corresponding hour  
-function GetMaximumCountInHour($countByHour, $dateByHour) 
+// return the maximum count and corresponding hour
+function GetMaximumCountInHour($countByHour, $dateByHour)
 {
   	// Find maximum element in array
   	$maxCountByHour = max($countByHour);
-  	
+
   	// Get element in date array corresponding to the maximum element in count array
   	$index = array_search(max($countByHour), $countByHour);
   	$dateOfMaxHour = $dateByHour[$index];
-  	
-  	return array($maxCountByHour, $dateOfMaxHour);	
+
+  	return array($maxCountByHour, $dateOfMaxHour);
 }
 
 // GetAverageCountInHour
 // Given an array of counts per hour, return the average number of people per hour
-function GetAverageCountInHour($countByHour) 
+function GetAverageCountInHour($countByHour)
 {
   	// Sum up the values in count array
-  	$runningSum = 0; 
+  	$runningSum = 0;
   	foreach ($countByHour as $value) {
   		$runningSum = $runningSum + $value;
   	}
-  	
+
   	// Divide by the number of elements in array to compute average
   	$average = $runningSum / sizeof($countByHour);
-  	
+
   	return $average;
-	  	
+
 }
 
 // ReformatDate
-// Given a date in format "YYYY-MM-DD HH" where HH ranges from 00 to 23, 
+// Given a date in format "YYYY-MM-DD HH" where HH ranges from 00 to 23,
 // reformat to "YYYY-MM-DD HH:00" where HH ranges from 00 to 12 AM/PM
-function ReformatDate($date) 
+function ReformatDate($date)
 {
 	// Extract the date from the input string
 	$dateString = substr($date, 0, 10);
-	
+
 	// Extract the time from the input string
 	$timeString = substr($date, 11, 13);
-	
+
 	// Determine if the time should be AM or PM
 	$amOrPm = "";
 	if ($timeString > 12) {
@@ -174,82 +180,81 @@ function ReformatDate($date)
 	else {
 		$amOrPm = "AM";
 	}
-	
+
 	// Format the date in a more readable format
 	$hour = $timeString % 12;
 	$formattedDate = $dateString . " " . $hour . ":00 " . $amOrPm;
-	
-	return $formattedDate; 
-	
+
+	return $formattedDate;
+
 }
 
 
-  
+
 // Functions for Generating Bar Graph
-  
+
 // GetDatesOfPastWeek
 // Returns an array with the date from a week ago, the current date,
 // and an array containing all dates within this week
 function GetDatesOfPastWeek()
 {
   	$dates = array("","","","","","","");
-	
+
 	// Get Start and End Dates
 	$today = strtotime("today");
 	$previousWeek = strtotime("-1 week", $today);
-	
+
 	// Format dates to match SQL syntax
 	$startDate = date("Y-m-d", $previousWeek) . " " . "00:00:00";
-	$endDate = date("Y-m-d") . " " . "00:00:00"; 
-	
+	$endDate = date("Y-m-d") . " " . "00:00:00";
+
 	//fill the array in ascending order (most recent date is last)
 	for($i = 0; $i < 7; $i++)
 	{
 		$dayName = "-1 week +" .$i. " day";
 		$dates[$i] = date("Y-m-d", strtotime($dayName, $today));
 	}
-	
+
 	return array($startDate, $endDate, $dates);
 
 }
 
 // GetTrafficCountForDates
-// Returns an array that contains the traffic count for each day 
-// in the input array of dates 
+// Returns an array that contains the traffic count for each day
+// in the input array of dates
 function GetTrafficCountForDates($results, $dates)
 {
 	$countByDay = array(0,0,0,0,0,0,0);
-	
+
 	// Fetch results row by row until there are no rows left
 	while($row = $results->fetch(PDO::FETCH_ASSOC)) {
 		$index = 6; // last index of array (to get the most recent day)
-		
+
 		// Trim the date to the string "YYYY-MM-DD"
 		$startTime = substr($dates[$index], 0, 10);
 
 		// Get the date of the current row and trim to format "YYYY-MM-DD"
 		$currentRowDate = substr($row[entryTime], 0, 10);
-		
+
 		// If row date is equal to the last element of the date array,
 		// increment the count for the corresponding element
 		if($currentRowDate == $startTime){
 			$countByDay[$index] = $countByDay[$index] + 1;
-		} 
+		}
 		else{
-		    // Find the corresponding position in the count array for the row date 
+		    // Find the corresponding position in the count array for the row date
 			while($currentRowDate != $startTime && $index > 0){
 				$index = $index - 1;
 				$startTime = substr($dates[$index], 0, 10);
 			}
-			
+
 			// Increment the count for the element
 			if($index >= 0){
 				$countByDay[$index] = $countByDay[$index] + 1;
 			}
 		}
 	}
-	
-
+}
 
 ?>
 

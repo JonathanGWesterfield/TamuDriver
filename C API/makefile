@@ -1,7 +1,8 @@
-all: connect
+program_LIBRARY_DIRS := $(mysql_config --libs) mysqlclient
+CFLAGS += $(mysql_config --cflags)
 
 connect: Connect.c
-	gcc -o secondConnect $(mysql_config --cflags) Connect.c $(mysql_config --libs) mysqlclient
+	gcc -o connect $(mysql_config --cflags) Connect.c $(mysql_config --libs)
 	
 clean:
 	rm *.o
