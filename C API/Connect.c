@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "Connect.h"
 
-/* // Main method for testing
+ // Main method for testing
 int main(int argc, char const *argv[])
 {
 	connect();
@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
     }
 
 	return EXIT_SUCCESS;
-}*/
+}
 
 /**
  * @brief Closes the connection

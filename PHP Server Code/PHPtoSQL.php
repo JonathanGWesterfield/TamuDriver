@@ -1,4 +1,4 @@
-<?php
+mka<?php
 
 /*****************************************
 ** File:    PHPtoSQL.php
@@ -19,16 +19,18 @@
 include('CommonMethods.php');
 include_once "PHPtoSQLInterface.php";
 
-class PHPtoSQL
+class PHPtoSQL implements PHPtoSQLInterface
 {
     private $COMMON;
     private $currentDate;
-    private $currentDateTime;
+    private $currententryTime;
     private $currentWeekDay;
     private $tomorrowDate;
     private $currentYear;
     private $nextYear;
     private $currentMonth;
+    private $lot1 = "lot35";
+    private $lot2 = "lot54";
 
     /**
      * DBAPI constructor.
@@ -54,7 +56,7 @@ class PHPtoSQL
         // echo("Default Timezone set to: " . date_default_timezone_get() . "<br>");
 
         $this->currentDate = date("Y-m-d");
-        $this->currentDateTime = date("Y-m-d H:i:s");
+        $this->currententryTime = date("Y-m-d H:i:s");
         $this->currentWeekDay = date('w');
         $this->tomorrowDate = date('Y-m-d', strtotime('+1 day'));
         $this->currentYear = date("Y");
@@ -63,7 +65,7 @@ class PHPtoSQL
         $this->nextYear = $this->nextYear . "-01-01";
 
         // echo("Current Date: " . $this->currentDate . "<br>");
-        // echo("Current DateTime: " . $this->currentDateTime . "<br>");
+        // echo("Current entryTime: " . $this->currententryTime . "<br>");
         // echo("Current weekday numerically: " . $this->currentWeekDay . "<br>");
         // echo("Tomorrow's Date: " . $this->tomorrowDate . "<br>");
         // echo("The current year is: " . $this->currentYear . "<br>");
@@ -87,23 +89,39 @@ class PHPtoSQL
      *
      * Gets the number of walkers in the last week starting from today
      */
-    public function getNumWalkersThisWeek()
+    public function getNumCarsThisWeek($locationChoice)
     {
+        $location = $this->determineLocation($locationChoice); // get the string for lot 34/54
+
         // echo("<br><br>getNumWalkersThisWeek<br>");
         $lastWeek = date('Y-m-d', strtotime('-1 week'));
 
         // echo("Last weeks date: " . $lastWeek . "<br>");
 
-        $sql = "SELECT COUNT(WalkerNumber) FROM WalkerData WHERE DateTime BETWEEN \"" . $lastWeek . "%\" AND \""
-            . $this->tomorrowDate . "%\" AND InOrOut=1";
+        $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" . $lastWeek . "%\" AND \""
+            . $this->tomorrowDate . "%\" AND InOrOut=1 AND location = \"" . $location . "\"";
 
         $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 
         $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-        // echo("Total Num Walkers is: " . $row['COUNT(WalkerNumber)'] . "<br>");
+        // echo("Total Num Walkers is: " . $row['COUNT(entryNumber)'] . "<br>");
 
-        return (int)$row['COUNT(WalkerNumber)'];
+        return (int)$row['COUNT(entryNumber)'];
+    }
+
+    /**
+     * @brief Replaces the boilerplate code that determines if the location is lot 54 or lot 35 based
+     * on the boolean value that is passed in to the funciton
+     * @param $locationChoice
+     * @return string
+     */
+    private function determineLocation($locationChoice)
+    {
+        if($locationChoice == true)
+            return $this->lot1; // lot 34
+        else
+            return $this->lot2; // lot 54
     }
 
     /**
@@ -114,7 +132,7 @@ class PHPtoSQL
      */
     public function getTrafficByYear($year)
     {
-        $thisYear = new DateTime((string)$year . "-01-01");
+        $thisYear = new entryTime((string)$year . "-01-01");
         $nextYear = clone $thisYear;
         $nextYear->modify('+1 year');
 
@@ -128,14 +146,14 @@ class PHPtoSQL
             $prevMonth->modify('-1 month'); // decrement month
             // echo $prevMonth->format('Y-m-d');
 
-            $sql = "SELECT COUNT(WalkerNumber) FROM WalkerData WHERE DateTime BETWEEN \"" .
+            $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
                 $prevMonth->format('Y-m-d') . "%\" AND \"" .
                 $lookMonth->format('Y-m-d') . "%\" AND InOrOut=1";
 
             $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
             $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-            array_push($monthArray, $row['COUNT(WalkerNumber)']); // add the result to the month array
+            array_push($monthArray, $row['COUNT(entryNumber)']); // add the result to the month array
         }
     }
 
@@ -151,7 +169,7 @@ class PHPtoSQL
     public function getTrafficByMonth($year, $month)
     {
         // get the very first day of the month
-        $thisMonth = new DateTime((string)$year . "-" . (string)$month . "-01");
+        $thisMonth = new entryTime((string)$year . "-" . (string)$month . "-01");
         // echo("The beginning of this month: " . $thisMonth->format('Y-m-d') . "<br>");
 
         // copy to make the next Month's object
@@ -178,7 +196,7 @@ class PHPtoSQL
 
         for($i = 0; $i < $diff; $i++)
         {
-            $sql = "SELECT COUNT(WalkerNumber) FROM WalkerData WHERE DateTime BETWEEN \"" .
+            $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
                 $dayBefore->format('Y-m-d') . "%\" AND \"" . $lookDay->format('Y-m-d') .
                 "%\" AND InOrOut=1";
 
@@ -186,7 +204,7 @@ class PHPtoSQL
             $row = $rs->fetch(PDO::FETCH_ASSOC);
 
             // add the result to the day array
-            array_push($dayArray, $row['COUNT(WalkerNumber)']);
+            array_push($dayArray, $row['COUNT(entryNumber)']);
 
             // decrement the target days for the next iteration
             $lookDay->modify("-1 day");
@@ -219,7 +237,7 @@ class PHPtoSQL
     {
         // get the next day to get the correct date
         // get the time of the absolute end of the day and the hour before that
-        $endOfToday = new DateTime((string)$year . "-" . (string)$month . "-" . (string)$day . " 00:00:00");
+        $endOfToday = new entryTime((string)$year . "-" . (string)$month . "-" . (string)$day . " 00:00:00");
         $endOfToday->modify('+1 day');
         $prevHour = clone $endOfToday;
         $prevHour->modify('-1 hour');
@@ -236,7 +254,7 @@ class PHPtoSQL
             // echo("End of Today - 1 hour: " . $prevHour->format('Y-m-d H:i:s') . "<br>");
 
             // get the number of walkers in between the 2 times
-            $sql = "SELECT COUNT(WalkerNumber) FROM WalkerData WHERE DateTime BETWEEN \"" .
+            $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
                 $prevHour->format('Y-m-d H:i:s') . "\" AND \"" . $endOfToday->format('Y-m-d H:i:s') .
                 "\" AND InOrOut=1";
 
@@ -244,7 +262,7 @@ class PHPtoSQL
             $row = $rs->fetch(PDO::FETCH_ASSOC);
 
             // push the result onto the array
-            array_push($hourArray, $row['COUNT(WalkerNumber)']);
+            array_push($hourArray, $row['COUNT(entryNumber)']);
 
             // decrement the hour for the next iteration
             $endOfToday->modify('-1 hour');
@@ -276,27 +294,27 @@ class PHPtoSQL
      */
     public function getTrafficTimeRange($year1, $month1, $day1, $year2, $month2, $day2)
     {
-        $startDay = new DateTime((string)$year1 . "-" . (string)$month1 . "-" . (string)$day1 . " 00:00:00");
+        $startDay = new entryTime((string)$year1 . "-" . (string)$month1 . "-" . (string)$day1 . " 00:00:00");
         // get the next day to get the correct date
 
         // get the time of the absolute end of the end day
-        $endDay = new DateTime((string)$year2 . "-" . (string)$month2 . "-" . (string)$day2 . " 00:00:00");
+        $endDay = new entryTime((string)$year2 . "-" . (string)$month2 . "-" . (string)$day2 . " 00:00:00");
         $endDay->modify('+1 day');
 
 
         // echo("Start Day: " . $startDay->format('Y-m-d H:i:s') . "<br>");
         // echo("End Day: " . $endDay->format('Y-m-d H:i:s') . "<br>");
 
-        $sql = "SELECT COUNT(WalkerNumber) FROM WalkerData WHERE DateTime BETWEEN \"" .
+        $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
             $startDay->format('Y-m-d H:i:s') . "\" AND \"" . $endDay->format('Y-m-d H:i:s') .
             "\" AND InOrOut=1";
 
         $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
         $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-        // echo("Number of People in given time range: " . $row['COUNT(WalkerNumber)'] . "<br><br>");
+        // echo("Number of People in given time range: " . $row['COUNT(entryNumber)'] . "<br><br>");
 
-        return (int)$row['COUNT(WalkerNumber)'];
+        return (int)$row['COUNT(entryNumber)'];
     }
 
     // GetMinimumCountInHour

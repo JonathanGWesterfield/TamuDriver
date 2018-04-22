@@ -12,7 +12,7 @@ interface PHPtoSQLInterface
     public function GetMedianCountInHour($countByHour, $dateByHour);
     public function GetMaximumCountInHour($countByHour, $dateByHour);
     public function GetAverageCountInHour($countByHour);
-    public function getNumWalkersThisWeek();
+    public function getNumCarsThisWeek($locationChoice);
     public function getTrafficByYear($year);
     public function getTrafficByMonth($year, $month);
     public function getTrafficByDay($year, $month, $day);
