@@ -36,6 +36,15 @@ bool connect();
 bool closeConnection();
 
 /**
+ * @brief Calls the insert statement, allows for use to insert into either lot 35 or
+ * lot 54 to provide consistency of naming conventions in the database
+ * @param inOrOut
+ * @param lot35or54
+ * @return
+ */
+bool useInsert(bool inOrOut, bool lot35or54);
+
+/**
  * @brief Inserts into the database. It inserts the location, whether or not it car entered or exited,
  * the day of the week (numerical representation), and the datetime
  * @param inOrOut - A boolean value. Therefore, 1 is true and 0 is false. 1 Means entering & 0 means exiting.

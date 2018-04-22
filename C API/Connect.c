@@ -4,15 +4,36 @@
 #include <unistd.h>
 #include "Connect.h"
 
-// Main method for testing
-/* int main(int argc, char const *argv[])
+/* // Main method for testing
+int main(int argc, char const *argv[])
 {
 	connect();
 
-	insert(true, "test");
+	for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            sleep(1);
+            if(i % 2 == 0)
+            {
+                if(j % 2 == 0)
+                    useInsert(true, true);
+                else
+                    useInsert(false, true);
+            }
+            else
+            {
+                if(j % 2 == 0)
+                    useInsert(true, false);
+                else
+                    useInsert(false, false);
+            }
+
+        }
+    }
 
 	return EXIT_SUCCESS;
-} */
+}*/
 
 /**
  * @brief Closes the connection
@@ -72,6 +93,25 @@ bool closeConnection()
         return true;
     else
         return false;
+}
+
+/**
+ * @brief Calls the insert statement, allows for use to insert into either lot 35 or
+ * lot 54 to provide consistency of naming conventions in the database
+ * @param inOrOut - A boolean value. Therefore, 1 is true and 0 is false. 1 Means entering & 0 means exiting.
+ * @param lot35or54 - A boolean value. True = lot 35, False = lot 54
+ * @return Boolean. Whether or not the function worked
+ */
+bool useInsert(bool inOrOut, bool lot35or54)
+{
+    if(lot35or54)
+    {
+        insert(inOrOut, "lot35");
+    }
+    else
+    {
+        insert(inOrOut, "lot54");
+    }
 }
 
 /**
