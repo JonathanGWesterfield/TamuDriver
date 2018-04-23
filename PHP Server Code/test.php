@@ -58,9 +58,9 @@ if(array_sum($secondDayArray) != 0)
 
 /** @var $secondHourArray
  * Testing getTrafficByDay - should return 24 hours */
-$secondHourArray = $test->getTrafficByDay(2018, 2, 15);
+$secondHourArray = $test->getTrafficByDay(2018, 2, 15, true);
 
-$numRange = $test->getTrafficTimeRange(2018, 2, 12, 2018, 2, 16);
+$numRange = $test->getTrafficTimeRange(2018, 2, 12, 2018, 2, 16, true);
 echo("NUMBER RANGE FROM TEST: " . $numRange . "<br>");
 
 

@@ -16,7 +16,7 @@
 **
 ***********************************************/
 
-include('CommonMethods.php');
+include_once "CommonInterface.php";
 include_once "PHPtoSQLInterface.php";
 
 class PHPtoSQL implements PHPtoSQLInterface
@@ -136,7 +136,7 @@ class PHPtoSQL implements PHPtoSQLInterface
         // get the string for lot 34/54
         $location = $this->determineLocation($locationChoice);
 
-        $thisYear = new entryTime((string)$year . "-01-01");
+        $thisYear = new DateTime((string)$year . "-01-01");
         $nextYear = clone $thisYear;
         $nextYear->modify('+1 year');
 
@@ -176,7 +176,7 @@ class PHPtoSQL implements PHPtoSQLInterface
         $location = $this->determineLocation($locationChoice);
 
         // get the very first day of the month
-        $thisMonth = new entryTime((string)$year . "-" . (string)$month . "-01");
+        $thisMonth = new DateTime((string)$year . "-" . (string)$month . "-01");
         // echo("The beginning of this month: " . $thisMonth->format('Y-m-d') . "<br>");
 
         // copy to make the next Month's object
@@ -247,7 +247,7 @@ class PHPtoSQL implements PHPtoSQLInterface
 
         // get the next day to get the correct date
         // get the time of the absolute end of the day and the hour before that
-        $endOfToday = new entryTime((string)$year . "-" . (string)$month . "-" . (string)$day . " 00:00:00");
+        $endOfToday = new DateTime((string)$year . "-" . (string)$month . "-" . (string)$day . " 00:00:00");
         $endOfToday->modify('+1 day');
         $prevHour = clone $endOfToday;
         $prevHour->modify('-1 hour');
@@ -307,11 +307,11 @@ class PHPtoSQL implements PHPtoSQLInterface
         // get the string for lot 34/54
         $location = $this->determineLocation($locationChoice);
 
-        $startDay = new entryTime((string)$year1 . "-" . (string)$month1 . "-" . (string)$day1 . " 00:00:00");
+        $startDay = new DateTime((string)$year1 . "-" . (string)$month1 . "-" . (string)$day1 . " 00:00:00");
         // get the next day to get the correct date
 
         // get the time of the absolute end of the end day
-        $endDay = new entryTime((string)$year2 . "-" . (string)$month2 . "-" . (string)$day2 . " 00:00:00");
+        $endDay = new DateTime((string)$year2 . "-" . (string)$month2 . "-" . (string)$day2 . " 00:00:00");
         $endDay->modify('+1 day');
 
 
@@ -579,24 +579,24 @@ class PHPtoSQL implements PHPtoSQLInterface
 
 
 ?>
-
+<!--
 <html>
-
-<!-- Latest compiled and minified CSS -->
+-->
+<!-- Latest compiled and minified CSS, jQuery library, and Latest compiled JavaScrip -->
+<!--
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <body>
 <div class="container">
 <div class="card">
 <div class="card-body">
+-->
 <!-- Create a table in which the results will be displayed -->
 
-	<?php
+	<?php /*
 		// Get the post values from index.html
 		$Time1 = $_POST["Time1"];
 		$Time2 = $_POST["Time2"];
@@ -630,18 +630,20 @@ class PHPtoSQL implements PHPtoSQLInterface
 		// Display results within time range
 		else
 		{
-			?>
+			*/?>
 
 			<!-- Create a table in which the results will be displayed -->
+            <!--
 			<div class="row">
 			<div class="col-s-12 col-md-12 table-responsive">
 			<table style="width:100%" class="table tableSection table-bordered">
 		  	<tr>
 					<th>Entry #</th>
 					<th>Time</th>
-		  	</tr>
+		  	</tr>  -->
 
 			<?php
+                /*
 				// Fetch a single row at a time from all of the results
 				PrintResults($results);
 				
@@ -721,4 +723,4 @@ class PHPtoSQL implements PHPtoSQLInterface
 	table.tableSection th, table.tableSection td {
 		width: 35%;
 	}
-</style>
+</style> */
