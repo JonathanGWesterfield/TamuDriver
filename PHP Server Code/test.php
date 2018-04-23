@@ -50,18 +50,14 @@ if(count($secondDayArray) !=cal_days_in_month(CAL_GREGORIAN,4,2018))
     echo("<br><br>ERROR!! getTrafficByMonth Failed!! Does not return correct # of days for Feb 2020!<br><br>");
 }
 
-/** Should return 0 walkers for Feb 2020 since no records in the future */
-if(array_sum($secondDayArray) != 0)
-{
-    echo("<br><br>ERROR!! getTrafficByMonth Failed!! Does not return correct # of walkers for Feb 2020!<br><br>");
-}
-
 /** @var $secondHourArray
  * Testing getTrafficByDay - should return 24 hours */
 $secondHourArray = $test->getTrafficByDay(2018, 4, 22, true);
 
 $numRange = $test->getTrafficTimeRange(2018, 4, 21, 2018, 4, 22, true);
 echo("NUMBER RANGE FROM TEST: " . $numRange . "<br>");
+
+$test->getNumCarsThisWeek(true);
 
 
 

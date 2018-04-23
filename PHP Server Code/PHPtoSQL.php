@@ -106,7 +106,7 @@ class PHPtoSQL implements PHPtoSQLInterface
 
         $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-        echo("Total Num Walkers is: " . $row['COUNT(entryNumber)'] . "<br>");
+        // echo("Total Num Walkers is: " . $row['COUNT(entryNumber)'] . "<br>");
 
         return (int)$row['COUNT(entryNumber)'];
     }
@@ -127,7 +127,9 @@ class PHPtoSQL implements PHPtoSQLInterface
 
     /**
      * @param $year
-     * @return array
+     * @return array - a length 12 array where each element is the number of cars that
+     * passed through for that month. If there were 8 cars that passed through in April,
+     * the element at index 3 would be 8
      *
      * Gives the traffic for each month in an array for the specified year passed in
      */
@@ -161,13 +163,13 @@ class PHPtoSQL implements PHPtoSQLInterface
             array_push($monthArray, $row['COUNT(entryNumber)']); // add the result to the month array
         }
 
-        echo("The numbers for this year starting from the end of the year: ");
+        /* echo("The numbers for this year starting from the end of the year: ");
         foreach (array_reverse($monthArray) as $element)
         {
             echo($element . " "); // print out the array (will be starting from December to January)
         }
 
-        echo("<br><br>");
+        echo("<br><br>"); */
 
         return array_reverse($monthArray); // reverse the array to start in January instead of December
     }
@@ -229,13 +231,13 @@ class PHPtoSQL implements PHPtoSQLInterface
             $dayBefore->modify("-1 day");
         }
 
-        echo("Numbers for the days of this current month: <br>");
+        /* echo("Numbers for the days of this current month: <br>");
         foreach (array_reverse($dayArray) as $element)
         {
             echo($element . " "); // print out the array (will be starting from December to January)
         }
 
-        echo("<br><br>");
+        echo("<br><br>"); */
 
         // return the days reversed since the original array starts from the end of the month
         return array_reverse($dayArray);
@@ -290,13 +292,13 @@ class PHPtoSQL implements PHPtoSQLInterface
             $prevHour->modify('-1 hour');
         }
 
-        echo("Numbers by hour: ");
+        /* echo("Numbers by hour: ");
         foreach (array_reverse($hourArray) as $element)
         {
             echo($element . " "); // print out the array (will be starting from December to January)
         }
 
-        echo("<br><br>");
+        echo("<br><br>"); */
 
         // reverse the array since it starts from the end of the day
         return array_reverse($hourArray);
@@ -311,7 +313,7 @@ class PHPtoSQL implements PHPtoSQLInterface
      * @param $day2
      * @return int
      *
-     * Takes in a date range (start and end date) and counts the number of walkers in the given range
+     * Takes in a date range (start and end date) and counts the number of cars in the given range
      */
     public function getTrafficTimeRange($year1, $month1, $day1, $year2, $month2, $day2, $locationChoice)
     {
@@ -336,7 +338,7 @@ class PHPtoSQL implements PHPtoSQLInterface
         $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
         $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-         echo("Number of People in given time range: " . $row['COUNT(entryNumber)'] . "<br><br>");
+        // echo("Number of People in given time range: " . $row['COUNT(entryNumber)'] . "<br><br>");
 
         return (int)$row['COUNT(entryNumber)'];
     }
