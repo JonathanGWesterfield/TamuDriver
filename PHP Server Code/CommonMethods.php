@@ -8,7 +8,7 @@
  * and the connect() function run before any functions on the database can be performed.
  */
 
-class Common implements CommonInterface
+class Common implements CommonInterface  
 {
     var $conn;
     var $debug;
