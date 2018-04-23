@@ -106,7 +106,7 @@ class PHPtoSQL implements PHPtoSQLInterface
 
         $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-        // echo("Total Num Walkers is: " . $row['COUNT(entryNumber)'] . "<br>");
+        echo("Total Num Walkers is: " . $row['COUNT(entryNumber)'] . "<br>");
 
         return (int)$row['COUNT(entryNumber)'];
     }
@@ -136,6 +136,7 @@ class PHPtoSQL implements PHPtoSQLInterface
         // get the string for lot 34/54
         $location = $this->determineLocation($locationChoice);
 
+        // get the date for first day of next year to get the full range of time
         $thisYear = new DateTime((string)$year . "-01-01");
         $nextYear = clone $thisYear;
         $nextYear->modify('+1 year');
@@ -159,6 +160,16 @@ class PHPtoSQL implements PHPtoSQLInterface
 
             array_push($monthArray, $row['COUNT(entryNumber)']); // add the result to the month array
         }
+
+        echo("The numbers for this year starting from the end of the year: ");
+        foreach (array_reverse($monthArray) as $element)
+        {
+            echo($element . " "); // print out the array (will be starting from December to January)
+        }
+
+        echo("<br><br>");
+
+        return array_reverse($monthArray); // reverse the array to start in January instead of December
     }
 
     /**
@@ -218,13 +229,13 @@ class PHPtoSQL implements PHPtoSQLInterface
             $dayBefore->modify("-1 day");
         }
 
-        // echo("Numbers for the days of this current month: <br>");
-        /*foreach (array_reverse($dayArray) as $element)
+        echo("Numbers for the days of this current month: <br>");
+        foreach (array_reverse($dayArray) as $element)
         {
             echo($element . " "); // print out the array (will be starting from December to January)
         }
 
-        echo("<br><br>"); */
+        echo("<br><br>");
 
         // return the days reversed since the original array starts from the end of the month
         return array_reverse($dayArray);
@@ -279,13 +290,13 @@ class PHPtoSQL implements PHPtoSQLInterface
             $prevHour->modify('-1 hour');
         }
 
-        // echo("Numbers by hour: ");
-        /* foreach (array_reverse($hourArray) as $element)
+        echo("Numbers by hour: ");
+        foreach (array_reverse($hourArray) as $element)
         {
             echo($element . " "); // print out the array (will be starting from December to January)
         }
 
-        echo("<br><br>"); */
+        echo("<br><br>");
 
         // reverse the array since it starts from the end of the day
         return array_reverse($hourArray);
@@ -325,7 +336,7 @@ class PHPtoSQL implements PHPtoSQLInterface
         $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
         $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-        // echo("Number of People in given time range: " . $row['COUNT(entryNumber)'] . "<br><br>");
+         echo("Number of People in given time range: " . $row['COUNT(entryNumber)'] . "<br><br>");
 
         return (int)$row['COUNT(entryNumber)'];
     }

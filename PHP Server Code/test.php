@@ -44,8 +44,8 @@ if(count($secondMonthArray) != 12)
 
 /** @var $secondDayArray
  * Testing getTrafficByMonth testing February 2020 - should return correct amount of days*/
-$secondDayArray = $test->getTrafficByMonth(2020, 2, true);
-if(count($secondDayArray) !=cal_days_in_month(CAL_GREGORIAN,2,2020))
+$secondDayArray = $test->getTrafficByMonth(2018, 4, true);
+if(count($secondDayArray) !=cal_days_in_month(CAL_GREGORIAN,4,2018))
 {
     echo("<br><br>ERROR!! getTrafficByMonth Failed!! Does not return correct # of days for Feb 2020!<br><br>");
 }
@@ -58,9 +58,9 @@ if(array_sum($secondDayArray) != 0)
 
 /** @var $secondHourArray
  * Testing getTrafficByDay - should return 24 hours */
-$secondHourArray = $test->getTrafficByDay(2018, 2, 15, true);
+$secondHourArray = $test->getTrafficByDay(2018, 4, 22, true);
 
-$numRange = $test->getTrafficTimeRange(2018, 2, 12, 2018, 2, 16, true);
+$numRange = $test->getTrafficTimeRange(2018, 4, 21, 2018, 4, 22, true);
 echo("NUMBER RANGE FROM TEST: " . $numRange . "<br>");
 
 
