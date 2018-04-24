@@ -59,6 +59,8 @@ echo("NUMBER RANGE FROM TEST: " . $numRange . "<br>");
 
 $test->getNumCarsThisWeek(true);
 
+$test->getListOfLocations();
+
 
 
 ?>

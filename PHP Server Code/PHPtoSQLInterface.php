@@ -79,6 +79,12 @@ interface PHPtoSQLInterface
      */
     public function getTrafficTimeRange($year1, $month1, $day1, $year2, $month2, $day2, $locationChoice);
 
+    /**
+     * @return array of strings -  Will return the names of all different locations (parking lots)
+     * that are being recorded in the database
+     */
+    public function getListOfLocations();
+
 
 
 

@@ -91,16 +91,13 @@ class PHPtoSQL implements PHPtoSQLInterface
      */
     public function getNumCarsThisWeek($locationChoice)
     {
-        // get the string for lot 34/54
-        $location = $this->determineLocation($locationChoice);
-
         // echo("<br><br>getNumWalkersThisWeek<br>");
         $lastWeek = date('Y-m-d', strtotime('-1 week'));
 
         // echo("Last weeks date: " . $lastWeek . "<br>");
 
         $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" . $lastWeek
-            . "%\" AND \"" . $this->tomorrowDate . "%\" AND InOrOut=1 AND location = \"" . $location . "\"";
+            . "%\" AND \"" . $this->tomorrowDate . "%\" AND InOrOut=1 AND location = \"" . $locationChoice . "\"";
 
         $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 
@@ -119,10 +116,17 @@ class PHPtoSQL implements PHPtoSQLInterface
      */
     private function determineLocation($locationChoice)
     {
-        if($locationChoice == true)
-            return $this->lot1; // lot 34
-        else
-            return $this->lot2; // lot 54
+        switch($locationChoice)
+        {
+            case 0:
+                return $this->lot1; // lot 35
+                break;
+            case 1:
+                return $this->lot2; // lot 54
+                break;
+            default:
+                return $this->lot1; // lot 35
+        }
     }
 
     /**
@@ -135,9 +139,6 @@ class PHPtoSQL implements PHPtoSQLInterface
      */
     public function getTrafficByYear($year, $locationChoice)
     {
-        // get the string for lot 34/54
-        $location = $this->determineLocation($locationChoice);
-
         // get the date for first day of next year to get the full range of time
         $thisYear = new DateTime((string)$year . "-01-01");
         $nextYear = clone $thisYear;
@@ -155,7 +156,7 @@ class PHPtoSQL implements PHPtoSQLInterface
 
             $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
                 $prevMonth->format('Y-m-d') . "%\" AND \"" .
-                $lookMonth->format('Y-m-d') . "%\" AND InOrOut=1 AND location = \"" . $location . "\"";
+                $lookMonth->format('Y-m-d') . "%\" AND InOrOut=1 AND location = \"" . $locationChoice . "\"";
 
             $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
             $row = $rs->fetch(PDO::FETCH_ASSOC);
@@ -185,9 +186,6 @@ class PHPtoSQL implements PHPtoSQLInterface
      */
     public function getTrafficByMonth($year, $month, $locationChoice)
     {
-        // get the string for lot 34/54
-        $location = $this->determineLocation($locationChoice);
-
         // get the very first day of the month
         $thisMonth = new DateTime((string)$year . "-" . (string)$month . "-01");
         // echo("The beginning of this month: " . $thisMonth->format('Y-m-d') . "<br>");
@@ -218,7 +216,7 @@ class PHPtoSQL implements PHPtoSQLInterface
         {
             $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
                 $dayBefore->format('Y-m-d') . "%\" AND \"" . $lookDay->format('Y-m-d') .
-                "%\" AND InOrOut=1 AND location = \"" . $location . "\"";
+                "%\" AND InOrOut=1 AND location = \"" . $locationChoice . "\"";
 
             $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
             $row = $rs->fetch(PDO::FETCH_ASSOC);
@@ -255,9 +253,6 @@ class PHPtoSQL implements PHPtoSQLInterface
      */
     public function getTrafficByDay($year, $month, $day, $locationChoice)
     {
-        // get the string for lot 34/54
-        $location = $this->determineLocation($locationChoice);
-
         // get the next day to get the correct date
         // get the time of the absolute end of the day and the hour before that
         $endOfToday = new DateTime((string)$year . "-" . (string)$month . "-" . (string)$day . " 00:00:00");
@@ -279,7 +274,7 @@ class PHPtoSQL implements PHPtoSQLInterface
             // get the number of walkers in between the 2 times
             $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
                 $prevHour->format('Y-m-d H:i:s') . "\" AND \"" . $endOfToday->format('Y-m-d H:i:s') .
-                "\" AND InOrOut=1 AND location = \"" . $location . "\"";
+                "\" AND InOrOut=1 AND location = \"" . $locationChoice . "\"";
 
             $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
             $row = $rs->fetch(PDO::FETCH_ASSOC);
@@ -317,9 +312,6 @@ class PHPtoSQL implements PHPtoSQLInterface
      */
     public function getTrafficTimeRange($year1, $month1, $day1, $year2, $month2, $day2, $locationChoice)
     {
-        // get the string for lot 34/54
-        $location = $this->determineLocation($locationChoice);
-
         $startDay = new DateTime((string)$year1 . "-" . (string)$month1 . "-" . (string)$day1 . " 00:00:00");
         // get the next day to get the correct date
 
@@ -333,7 +325,7 @@ class PHPtoSQL implements PHPtoSQLInterface
 
         $sql = "SELECT COUNT(entryNumber) FROM DriverData WHERE entryTime BETWEEN \"" .
             $startDay->format('Y-m-d H:i:s') . "\" AND \"" . $endDay->format('Y-m-d H:i:s') .
-            "\" AND InOrOut=1 AND location = \"" . $location . "\"";
+            "\" AND InOrOut=1 AND location = \"" . $locationChoice . "\"";
 
         $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
         $row = $rs->fetch(PDO::FETCH_ASSOC);
@@ -341,6 +333,35 @@ class PHPtoSQL implements PHPtoSQLInterface
         // echo("Number of People in given time range: " . $row['COUNT(entryNumber)'] . "<br><br>");
 
         return (int)$row['COUNT(entryNumber)'];
+    }
+
+    /**
+     * @return array of strings -  Will return the names of all different locations (parking lots)
+     * that are being recorded in the database
+     */
+    public function getListOfLocations()
+    {
+        // create an array of locations to return
+        $locationArray = [];
+
+        $sql = "SELECT DISTINCT location FROM DriverData";
+        $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+        while($row = $rs->fetch(PDO::FETCH_ASSOC))
+        {
+            foreach($row as $element)
+            {
+                array_push($locationArray, $element);
+            }
+        }
+
+        echo("Locations in Database: ");
+        foreach ($locationArray as $element)
+        {
+            echo($element . " "); // print out the array (will be starting from December to January)
+        }
+
+        echo("<br><br>");
+
     }
 
     // GetMinimumCountInHour
@@ -368,7 +389,7 @@ class PHPtoSQL implements PHPtoSQLInterface
         $sortedCountByHour = $countByHour;
         rsort($sortedCountByHour);
 
-        // find middle index of orignal array
+        // find middle index of original array
         $midIndex = round(count($sortedCountByHour)/2);
         $median = $sortedCountByHour[$midIndex - 1];
 
