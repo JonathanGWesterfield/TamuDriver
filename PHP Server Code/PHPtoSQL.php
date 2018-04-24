@@ -354,13 +354,13 @@ class PHPtoSQL implements PHPtoSQLInterface
             }
         }
 
-        echo("Locations in Database: ");
+        /* echo("Locations in Database: ");
         foreach ($locationArray as $element)
         {
             echo($element . " "); // print out the array (will be starting from December to January)
         }
 
-        echo("<br><br>");
+        echo("<br><br>"); */
 
     }
 
