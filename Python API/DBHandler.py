@@ -71,11 +71,14 @@ def fileToDB():
     if fileIsEmpty():
         return
 
-    dataFile = open("data.txt","r+")
-    entries = dataFile.readlines()  # Split the data file into lines
+    dataFile = open("data.txt", "r+")
+    # Split the data file into lines
+    entries = dataFile.readlines()
     for entry in entries:
-        values = entry.split()  # Divide the current line into multiple values
-        entryTime = values[0] + " " + values[1]  # Concatenate date and time
+        # Divide the current line into multiple values
+        values = entry.split()
+        # Concatenate date and time
+        entryTime = values[0] + " " + values[1]
         entryLocation = values[2]
         entryInOrOut = values[3]
         try:
@@ -89,16 +92,22 @@ def fileToDB():
             cnx.commit()
         except mysql.connector.Error as err:
             print("Something went wrong: {}".format(err))
-
-    dataFile.truncate()  # Erase file contents once all data has been inserted
+    # Erase file contents once all data has been inserted
+    dataFile.seek(0)
+    dataFile.truncate()
     dataFile.close()
 
 
 def insert(dataMode, location, inOrOut):
+    """
+    This function handles inserting the data read from the Arduino into either
+    the file or the database depending on whether a network connection can be established.
+    :param dataMode:
+    :param location:
+    :param inOrOut:
+    :return:
+    """
     if dataMode == 1:
         dbInsert(location, inOrOut)
     elif dataMode == 0:
         insertToFile(location, inOrOut)
-
-
-
