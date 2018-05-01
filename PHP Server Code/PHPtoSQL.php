@@ -87,7 +87,8 @@ class PHPtoSQL implements PHPtoSQLInterface
     /**
      * @return int
      *
-     * Gets the number of walkers in the last week starting from today
+     * Gets the number of cars in the last week starting from today
+     * Usage: $numCars = getNumCarsThisWeek("lot35"); for Lot 35
      */
     public function getNumCarsThisWeek($locationChoice)
     {
@@ -109,33 +110,15 @@ class PHPtoSQL implements PHPtoSQLInterface
     }
 
     /**
-     * @brief Replaces the boilerplate code that determines if the location is lot 54 or lot 35 based
-     * on the boolean value that is passed in to the funciton
-     * @param $locationChoice
-     * @return string
-     */
-    private function determineLocation($locationChoice)
-    {
-        switch($locationChoice)
-        {
-            case 0:
-                return $this->lot1; // lot 35
-                break;
-            case 1:
-                return $this->lot2; // lot 54
-                break;
-            default:
-                return $this->lot1; // lot 35
-        }
-    }
-
-    /**
      * @param $year
-     * @return array - a length 12 array where each element is the number of cars that
+     * @param $locationChoice - string for the lot you want to put in
+     * @return int array - a length 12 array where each element is the number of cars that
      * passed through for that month. If there were 8 cars that passed through in April,
      * the element at index 3 would be 8
      *
-     * Gives the traffic for each month in an array for the specified year passed in
+     * Gives the traffic for each month in an array for the specified year passed in.
+     *
+     * Usage: $yearArray = getTrafficByYear(2018, "lot35"); for 2018 for Lot 35
      */
     public function getTrafficByYear($year, $locationChoice)
     {
@@ -178,11 +161,12 @@ class PHPtoSQL implements PHPtoSQLInterface
     /**
      * @param $year
      * @param $month
-     * @return array
+     * @param $locationChoice
+     * @return int array - array with the traffic number for each day of the specified month
      *
      * Gets the traffic for each day during the specified month of the specified year
      *
-     * Usage: getTrafficByMonth(2018, 2); // for February 2018
+     * Usage: $monthArray = getTrafficByMonth(2018, 2, "lot35"); // for February 2018 for Lot 35
      */
     public function getTrafficByMonth($year, $month, $locationChoice)
     {
@@ -245,11 +229,12 @@ class PHPtoSQL implements PHPtoSQLInterface
      * @param $year
      * @param $month
      * @param $day
-     * @return array
+     * @param $locationChoice
+     * @return int array - length 24 array with the traffic number for each our of the day
      *
      * Gets the traffic for each hour and returns it in a 24 element array.
      *
-     * Usage: <var = getTrafficByDay(2018, 2, 15);> for Febraury 15, 2018
+     * Usage: < $dayArray = getTrafficByDay(2018, 2, 15, "lot35");> for Febraury 15, 2018 for Lot 35
      */
     public function getTrafficByDay($year, $month, $day, $locationChoice)
     {
@@ -306,9 +291,13 @@ class PHPtoSQL implements PHPtoSQLInterface
      * @param $year2
      * @param $month2
      * @param $day2
-     * @return int
+     * @param $locationChoice
+     * @return integer - the number of cars in the time range
      *
      * Takes in a date range (start and end date) and counts the number of cars in the given range
+     *
+     * Usage: $trafficInRange = getTrafficTimeRange(2018, 2, 15, 2018, 2, 28, "lot35");
+     * for number of cars between 2/15/2018 and 2/28/2018 for Lot 35
      */
     public function getTrafficTimeRange($year1, $month1, $day1, $year2, $month2, $day2, $locationChoice)
     {
@@ -336,7 +325,9 @@ class PHPtoSQL implements PHPtoSQLInterface
     }
 
     /**
-     * @return array of strings -  Will return the names of all different locations (parking lots)
+     * @return array of strings
+     *
+     * Will return the names of all different locations (parking lots)
      * that are being recorded in the database
      */
     public function getListOfLocations()
@@ -364,9 +355,14 @@ class PHPtoSQL implements PHPtoSQLInterface
 
     }
 
-    // GetMinimumCountInHour
-    // Given an array of dates grouped by hour and corresponding array of counts in each hour,
-    // return the minimum count and corresponding hour
+    /**
+     * @param $countByHour - the corresponding array of dates sorted by hour returned from GroupResultsByHour.
+     * @param $dateByHour - the array of counts by hour returned from GroupResultsByHour.
+     * @return  Returns an array containing (1) the minimum count within an hour and (2)
+     * the corresponding time for which the count was recorded.
+     *
+     * Finds the minimum count for an hour in a specific time range.
+     */
     function GetMinimumCountInHour($countByHour, $dateByHour)
     {
         // Find minimum element in array
@@ -380,9 +376,14 @@ class PHPtoSQL implements PHPtoSQLInterface
 
     }
 
-    // GetMedianCountInHour
-    // Given an array of dates grouped by hour and corresponding array of counts in each hour,
-    // return the median count and corresponding hour
+    /**
+     * @param $countByHour - the array of counts by hour returned from GroupResultsByHour.
+     * @param $dateByHour - the corresponding array of dates sorted by hour returned from GroupResultsByHour.
+     * @return array - Returns an array containing (1) the median count within an hour and
+     * (2) the corresponding time for which the count was recorded.
+     *
+     * Finds the median count for an hour in a specific time range.
+     */
     function GetMedianCountInHour($countByHour, $dateByHour)
     {
         // Sort array of counts
@@ -400,9 +401,14 @@ class PHPtoSQL implements PHPtoSQLInterface
 
     }
 
-    // GetMaximumCountInHour
-    // Given an array of dates grouped by hour and corresponding array of counts in each hour,
-    // return the maximum count and corresponding hour
+    /**
+     * @param $countByHour - the array of counts by hour returned from GroupResultsByHour.
+     * @param $dateByHour - the corresponding array of dates sorted by hour returned from GroupResultsByHour.
+     * @return 2 arrays - Returns an array containing (1) the maximum count within an hour and
+     * (2) the corresponding time for which the count was recorded.
+     *
+     * Finds the maximum count for an hour in a specific time range.
+     */
     function GetMaximumCountInHour($countByHour, $dateByHour)
     {
         // Find maximum element in array
@@ -415,8 +421,12 @@ class PHPtoSQL implements PHPtoSQLInterface
         return array($maxCountByHour, $dateOfMaxHour);
     }
 
-    // GetAverageCountInHour
-    // Given an array of counts per hour, return the average number of people per hour
+    /**
+     * @param $countByHour - the array of counts by hour returned from GroupResultsByHour.
+     * @return integer - Returns the average number of people recorded in an hour of the specific time range.
+     *
+     * Finds average number of people counted during an hour in a specific time range.
+     */
     function GetAverageCountInHour($countByHour)
     {
         // Sum up the values in count array
@@ -434,26 +444,51 @@ class PHPtoSQL implements PHPtoSQLInterface
     }
 
 
-
-    // ExecuteQuery
-    // Given two input times for the time range, return the query results
+    /**
+     * @param $Time1 - First timestamp of the format ‘YYYY-MM-DD HH:MM:00’
+     * @param $Time2 - Second timestamp of the format ‘YYYY-MM-DD HH:MM:00’.
+     * @param $COMMON - common instance that connects to the database.
+     * @return array - all of the resulting data (in rows) returned from the query.
+     *
+     * A function to execute a query of correct MySQL syntax for the specified instance of the
+     * database within a certain time range.
+     *
+     * Usage: $Time1 = $_POST["Time1"];
+     * $Time2 = $_POST["Time2"];
+     * // Convert input times into the correct Timestamp format
+     * $time1Format = ConvertTime($Time1);
+     * $time2Format = ConvertTime($Time2);
+     * // Create a new Common instance to connect to the database
+     * $debug = false;
+     * $COMMON = new Common($debug);
+     * // Execute query and fetch the results
+     * $results = ExecuteQuery($time1Format, $time2Format, $COMMON);
+     */
     function ExecuteQuery($Time1, $Time2, $COMMON)
     {
-        $sql = "SELECT * FROM `ArduinoProject1` WHERE `entryTime` BETWEEN '" . $Time1 . "' AND '" . $Time2 . "';";
+        $sql = "SELECT * FROM `DriverData` WHERE `entryTime` BETWEEN '" . $Time1 . "' AND '" . $Time2 . "';";
         $rs = $COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
         return $rs;
     }
 
-    // ConvertTime
-    // Given timestamp from form, convert into the correct Timestamp format
+    /**
+     * @param $Time - timestamp of the format ‘YYYY-MM-DDTHH:MM’.
+     * @return string - which is of the form ‘YYYY-MM-DD HH:MM:00’.
+     *
+     * Converts a time of a certain format to that of another.
+     */
     function ConvertTime($Time)
     {
         $timeFormat = substr($Time, 0,10) . " " . substr($Time, 11, 5) . ":00";
         return $timeFormat;
     }
 
-    // PrintResults
-    // Given query results, print table of results to website
+    /**
+     * @param $results - the results returned from a query, specifically from the function, ExecuteQuery()
+     * @return void - returns echo’s html code to return rows with an entry number and the timestamp for it
+     *
+     * PrintResults is a function used to print the results of a query.
+     */
     function PrintResults($results)
     {
         $count = 0;
@@ -469,10 +504,13 @@ class PHPtoSQL implements PHPtoSQLInterface
 
     }
 
-    // GroupResultsByHour
-    // Given query results, count number of results in each hour and return array
-    // containing an array of the traffic counted in each hour and a corresponding array with
-    // dates within time range grouped by hour
+    /**
+     * @param $results - the results returned from a query, specifically from the function, ExecuteQuery().
+     * @return array - Returns an array containing (1) an array of the dates within the results,
+     * grouped by hour, and (2) an array containing the counts for each corresponding hour of the dates array.
+     *
+     * Groups the results of a query by hour and counts the number of results within each hour of the time range.
+     */
     function GroupResultsByHour($results)
     {
         // Get first date in results
@@ -508,9 +546,12 @@ class PHPtoSQL implements PHPtoSQLInterface
         return array($countByHour, $dateByHour);
     }
 
-    // ReformatDate
-    // Given a date in format "YYYY-MM-DD HH" where HH ranges from 00 to 23,
-    // reformat to "YYYY-MM-DD HH:00" where HH ranges from 00 to 12 AM/PM
+    /**
+     * @param $date - A date in format "YYYY-MM-DD HH" where HH ranges from 00 to 23.
+     * @return string - The date in format "YYYY-MM-DD HH:00" where HH ranges from 00 to 12 AM/PM.
+     *
+     * Reformats a date into a more readable format.
+     */
     function ReformatDate($date)
     {
         // Extract the date from the input string
