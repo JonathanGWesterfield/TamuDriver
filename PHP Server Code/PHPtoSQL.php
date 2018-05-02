@@ -345,6 +345,8 @@ class PHPtoSQL implements PHPtoSQLInterface
             }
         }
 
+        return $locationArray;
+
         /* echo("Locations in Database: ");
         foreach ($locationArray as $element)
         {
@@ -653,8 +655,7 @@ class PHPtoSQL implements PHPtoSQLInterface
     }
 }
 
-
-?>
+/*
 <!--
 <html>
 -->
@@ -706,7 +707,7 @@ class PHPtoSQL implements PHPtoSQLInterface
 		// Display results within time range
 		else
 		{
-			*/?>
+			?>
 
 			<!-- Create a table in which the results will be displayed -->
             <!--
@@ -800,3 +801,4 @@ class PHPtoSQL implements PHPtoSQLInterface
 		width: 35%;
 	}
 </style> */
+?>
