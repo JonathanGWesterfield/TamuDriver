@@ -59,7 +59,16 @@ echo("NUMBER RANGE FROM TEST: " . $numRange . "<br>");
 
 $test->getNumCarsThisWeek(true);
 
-$test->getListOfLocations();
+$locationArray = $test->getListOfLocations();
+echo("Locations in Database: ");
+for( $i = 0; $i < count($locationArray); $i++)
+{
+    echo("i: " . $i);
+    echo($locationArray[$i]. " "); // print out the array (will be starting from December to January)
+}
+
+echo("<br><br>");
+
 
 
 
