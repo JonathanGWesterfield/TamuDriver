@@ -1,6 +1,5 @@
 import datetime
 
-
 def insertToFile(location, inOrOut):
     """
     This function inserts data read from the Arduino into a text file.
@@ -8,7 +7,7 @@ def insertToFile(location, inOrOut):
     time, location, and type.
     :param location:
     :param inOrOut:
-    :return:
+    :return: void
     """
     time = datetime.datetime.now().replace(microsecond=0)
     time.strftime('%Y-%m-%d %H:%M:%S')
@@ -22,7 +21,7 @@ def fileIsEmpty():
     This function checks the data file to see if it is empty.
     It is used by the fileToDB function to send file contents to
     the DB if the file is not empty.
-    :return:
+    :return: Boolean - specifies whether or not the file has more to read from
     """
     dataFile = open("data.txt")
     # Move to first character in file

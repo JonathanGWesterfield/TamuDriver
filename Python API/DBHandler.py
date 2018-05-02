@@ -8,7 +8,7 @@ def dbConnect():
     """
     This function attempts to establish a database connection using the specified parameters
     and throws an exception if needed.
-    :return:
+    :return: Boolean - specifies whether the connection was successful or not
     """
     global cnx
     global cursor
@@ -44,9 +44,9 @@ def dbInsert(location, inOrOut):
     """
     This functions inserts the data entry that is read in from the Arduino into the MySQL database. The entry contains
     whether the car is entering or exiting as well as the lot number.
-    :param inOrOut:
-    :param location:
-    :return:
+    :param inOrOut: Boolean - whether the car entered or exited
+    :param location: String - specifies which lot we are recording for
+    :return: Boolean - specifies whether or not the insert was successful or not
     """
     try:
         sql = "INSERT INTO DriverData (location, InOrOut, weekDay, entryTime) VALUES (\""
@@ -65,7 +65,7 @@ def fileToDB():
     """
     This function reads in the data from the data file that is used to store data if a DB connection
     could not be established and reads it in to the database.
-    :return:
+    :return: void
     """
     # Exit function if file is empty
     if fileIsEmpty():
@@ -103,9 +103,9 @@ def insert(dataMode, location, inOrOut):
     This function handles inserting the data read from the Arduino into either
     the file or the database depending on whether a network connection can be established.
     :param dataMode:
-    :param location:
-    :param inOrOut:
-    :return:
+    :param location: String - specifies which lot we are recording for
+    :param inOrOut: Boolean - whether the car entered or exited
+    :return: void
     """
     if dataMode == 1:
         dbInsert(location, inOrOut)
