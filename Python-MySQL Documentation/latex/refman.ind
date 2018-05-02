@@ -1,0 +1,36 @@
+\begin{theindex}
+
+  \item {D\+B\+Handler.\+py}
+    \subitem {db\+Connect}, \hyperpage{3}
+    \subitem {db\+Insert}, \hyperpage{3}
+    \subitem {file\+To\+DB}, \hyperpage{3}
+    \subitem {insert}, \hyperpage{4}
+  \item {db\+Connect}
+    \subitem {D\+B\+Handler.\+py}, \hyperpage{3}
+  \item {db\+Insert}
+    \subitem {D\+B\+Handler.\+py}, \hyperpage{3}
+
+  \indexspace
+
+  \item {File\+Hander.\+py}
+    \subitem {file\+Is\+Empty}, \hyperpage{4}
+    \subitem {insert\+To\+File}, \hyperpage{4}
+  \item {file\+Is\+Empty}
+    \subitem {File\+Hander.\+py}, \hyperpage{4}
+  \item {file\+To\+DB}
+    \subitem {D\+B\+Handler.\+py}, \hyperpage{3}
+
+  \indexspace
+
+  \item {insert}
+    \subitem {D\+B\+Handler.\+py}, \hyperpage{4}
+  \item {insert\+To\+File}
+    \subitem {File\+Hander.\+py}, \hyperpage{4}
+
+  \indexspace
+
+  \item {Python A\+P\+I/\+D\+B\+Handler.\+py}, \hyperpage{3}
+  \item {Python A\+P\+I/\+Data\+Handler.\+py}, \hyperpage{3}
+  \item {Python A\+P\+I/\+File\+Hander.\+py}, \hyperpage{4}
+
+\end{theindex}

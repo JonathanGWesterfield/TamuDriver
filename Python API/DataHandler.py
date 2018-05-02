@@ -4,6 +4,8 @@ import serial
 
 from DBHandler import dbConnect, insert, fileToDB
 
+## @file DataHandler.py
+
 dataMode = 0  # 0 = File (offline), 1 = DB (online)
 ser = serial.Serial('COM3', 9600)  # Change port for Linux
 location = "lot35"

@@ -1,9 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * Date: 2/8/18
- * Time: 4:20 PM
- *
  * Common is responsible for actually connecting to the MySQL database. The Common class object must be created
  * and the connect() function run before any functions on the database can be performed.
  */
@@ -38,7 +34,7 @@ class Common implements CommonInterface
     /**
      * @param $db
      *
-     * Uses the class member functions to actually make the connection to the database
+     * Uses the $db class member functions to actually make the connection to the database
      */
     function connect($db)// connect to MySQL DB Server
     {
@@ -62,11 +58,11 @@ class Common implements CommonInterface
      *
      * Uses the sql statement that is passed in and executes the query
      *
-     * Example Code:
-     * $sql = "SELECT COUNT(WalkerNumber) FROM WalkerData";
-     * $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-     * $row = $rs->fetch(PDO::FETCH_ASSOC);
-     * return (int)$row['COUNT(WalkerNumber)'];
+     * Example Code: <br>
+     * $sql = "SELECT COUNT(WalkerNumber) FROM WalkerData"; <br>
+     * $rs = $this->COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]); <br>
+     * $row = $rs->fetch(PDO::FETCH_ASSOC); <br>
+     * return (int)$row['COUNT(WalkerNumber)']; <br>
      */
     function executeQuery($sql, $filename) // execute query
     {

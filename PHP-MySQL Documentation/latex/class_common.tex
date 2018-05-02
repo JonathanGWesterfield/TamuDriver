@@ -1,0 +1,110 @@
+\hypertarget{class_common}{}\section{Common Class Reference}
+\label{class_common}\index{Common@{Common}}
+Inheritance diagram for Common\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_common}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_common_a4a9e6769ab6c946d0895e8d987df1c10}{Common} (\$debug)
+\item 
+\hyperlink{class_common_a1b1bd9b3f45a5fbd2549355282cdc96f}{connect} (\$db)
+\item 
+\hyperlink{class_common_a57a9dbd1203cf7b3ef3c5ce40d4047cc}{execute\+Query} (\$sql, \$filename)
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries \$conn}\hypertarget{class_common_aa8a5a87b9c1a6a0819b88447cbe41877}{}\label{class_common_aa8a5a87b9c1a6a0819b88447cbe41877}
+
+\item 
+{\bfseries \$debug}\hypertarget{class_common_a85ae3e64cd40e9564adceb010085e9dd}{}\label{class_common_a85ae3e64cd40e9564adceb010085e9dd}
+
+\item 
+{\bfseries \$db} =\char`\"{}database.\+cse.\+tamu.\+edu\char`\"{}\hypertarget{class_common_a1fa3127fc82f96b1436d871ef02be319}{}\label{class_common_a1fa3127fc82f96b1436d871ef02be319}
+
+\item 
+{\bfseries \$dbname} =\char`\"{}jgwesterfield-\/Tamu\+Driver\char`\"{}\hypertarget{class_common_ac5111a571fffa2499732833bb7f0d8c1}{}\label{class_common_ac5111a571fffa2499732833bb7f0d8c1}
+
+\item 
+{\bfseries \$user} =\char`\"{}jgwesterfield\char`\"{}\hypertarget{class_common_a598ca4e71b15a1313ec95f0df1027ca5}{}\label{class_common_a598ca4e71b15a1313ec95f0df1027ca5}
+
+\item 
+{\bfseries \$pass} =\char`\"{}Whoop19!\char`\"{}\hypertarget{class_common_a12ec2780b52bd1c54d38c2f981c0349f}{}\label{class_common_a12ec2780b52bd1c54d38c2f981c0349f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_common}{Common} is responsible for actually connecting to the My\+S\+QL database. The \hyperlink{class_common}{Common} class object must be created and the \hyperlink{class_common_a1b1bd9b3f45a5fbd2549355282cdc96f}{connect()} function run before any functions on the database can be performed. 
+
+\subsection{Member Function Documentation}
+\index{Common@{Common}!Common@{Common}}
+\index{Common@{Common}!Common@{Common}}
+\subsubsection[{\texorpdfstring{Common(\$debug)}{Common($debug)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Common} (
+\begin{DoxyParamCaption}
+\item[{}]{\$debug}
+\end{DoxyParamCaption}
+)}\hypertarget{class_common_a4a9e6769ab6c946d0895e8d987df1c10}{}\label{class_common_a4a9e6769ab6c946d0895e8d987df1c10}
+\hyperlink{class_common}{Common} constructor. 
+\begin{DoxyParams}{Parameters}
+{\em \$debug} & The constructor for the \hyperlink{class_common}{Common} class \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_common_interface_a4a9e6769ab6c946d0895e8d987df1c10}{Common\+Interface}.
+
+\index{Common@{Common}!connect@{connect}}
+\index{connect@{connect}!Common@{Common}}
+\subsubsection[{\texorpdfstring{connect(\$db)}{connect($db)}}]{\setlength{\rightskip}{0pt plus 5cm}connect (
+\begin{DoxyParamCaption}
+\item[{}]{\$db}
+\end{DoxyParamCaption}
+)}\hypertarget{class_common_a1b1bd9b3f45a5fbd2549355282cdc96f}{}\label{class_common_a1b1bd9b3f45a5fbd2549355282cdc96f}
+
+\begin{DoxyParams}{Parameters}
+{\em \$db} & Uses the \$db class member functions to actually make the connection to the database \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_common_interface_a1b1bd9b3f45a5fbd2549355282cdc96f}{Common\+Interface}.
+
+\index{Common@{Common}!execute\+Query@{execute\+Query}}
+\index{execute\+Query@{execute\+Query}!Common@{Common}}
+\subsubsection[{\texorpdfstring{execute\+Query(\$sql, \$filename)}{executeQuery($sql, $filename)}}]{\setlength{\rightskip}{0pt plus 5cm}execute\+Query (
+\begin{DoxyParamCaption}
+\item[{}]{\$sql, }
+\item[{}]{\$filename}
+\end{DoxyParamCaption}
+)}\hypertarget{class_common_a57a9dbd1203cf7b3ef3c5ce40d4047cc}{}\label{class_common_a57a9dbd1203cf7b3ef3c5ce40d4047cc}
+
+\begin{DoxyParams}{Parameters}
+{\em \$sql} & \\
+\hline
+{\em \$filename} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+mixed
+\end{DoxyReturn}
+Uses the sql statement that is passed in and executes the query
+
+Example Code\+: ~\newline
+ \$sql = \char`\"{}\+S\+E\+L\+E\+C\+T C\+O\+U\+N\+T(\+Walker\+Number) F\+R\+O\+M Walker\+Data\char`\"{}; ~\newline
+ \$rs = \$this-\/$>$C\+O\+M\+M\+O\+N-\/$>$execute\+Query(\$sql, \$\+\_\+\+S\+E\+R\+V\+ER\mbox{[}\char`\"{}\+S\+C\+R\+I\+P\+T\+\_\+\+N\+A\+M\+E\char`\"{}\mbox{]}); ~\newline
+ \$row = \$rs-\/$>$fetch(\+P\+D\+O\+::\+F\+E\+T\+C\+H\+\_\+\+A\+S\+S\+O\+C); ~\newline
+ return (int)\$row\mbox{[}\textquotesingle{}C\+O\+U\+N\+T(\+Walker\+Number)\textquotesingle{}\mbox{]}; ~\newline
+ 
+
+Implements \hyperlink{interface_common_interface_a57a9dbd1203cf7b3ef3c5ce40d4047cc}{Common\+Interface}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+P\+H\+P Server Code/Common\+Methods.\+php\end{DoxyCompactItemize}

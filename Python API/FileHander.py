@@ -1,5 +1,7 @@
 import datetime
 
+## @file FileHander.py
+
 def insertToFile(location, inOrOut):
     """
     This function inserts data read from the Arduino into a text file.

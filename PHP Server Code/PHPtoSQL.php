@@ -445,24 +445,25 @@ class PHPtoSQL implements PHPtoSQLInterface
 
 
     /**
+     * @brief A function to execute a query of correct MySQL syntax for the specified instance of the
+     * database within a certain time range.
      * @param $Time1 - First timestamp of the format ‘YYYY-MM-DD HH:MM:00’
      * @param $Time2 - Second timestamp of the format ‘YYYY-MM-DD HH:MM:00’.
      * @param $COMMON - common instance that connects to the database.
      * @return array - all of the resulting data (in rows) returned from the query.
      *
-     * A function to execute a query of correct MySQL syntax for the specified instance of the
-     * database within a certain time range.
      *
-     * Usage: $Time1 = $_POST["Time1"];
-     * $Time2 = $_POST["Time2"];
-     * // Convert input times into the correct Timestamp format
-     * $time1Format = ConvertTime($Time1);
-     * $time2Format = ConvertTime($Time2);
-     * // Create a new Common instance to connect to the database
-     * $debug = false;
-     * $COMMON = new Common($debug);
-     * // Execute query and fetch the results
-     * $results = ExecuteQuery($time1Format, $time2Format, $COMMON);
+     * Usage: <br>
+     * $Time1 = $_POST["Time1"]; <br>
+     * $Time2 = $_POST["Time2"]; <br>
+     * // Convert input times into the correct Timestamp format <br>
+     * $time1Format = ConvertTime($Time1); <br>
+     * $time2Format = ConvertTime($Time2); <br>
+     * // Create a new Common instance to connect to the database <br>
+     * $debug = false; <br>
+     * $COMMON = new Common($debug); <br>
+     * // Execute query and fetch the results <br>
+     * $results = ExecuteQuery($time1Format, $time2Format, $COMMON); <br>
      */
     function ExecuteQuery($Time1, $Time2, $COMMON)
     {

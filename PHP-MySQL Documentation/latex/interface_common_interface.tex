@@ -1,0 +1,94 @@
+\hypertarget{interface_common_interface}{}\section{Common\+Interface Interface Reference}
+\label{interface_common_interface}\index{Common\+Interface@{Common\+Interface}}
+
+
+Interface to for the Common\+Methods.\+php file. Include this file in your code instead of the Common\+Methods.\+php file.  
+
+
+Inheritance diagram for Common\+Interface\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interface_common_interface}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interface_common_interface_a4a9e6769ab6c946d0895e8d987df1c10}{Common} (\$debug)
+\item 
+\hyperlink{interface_common_interface_a1b1bd9b3f45a5fbd2549355282cdc96f}{connect} (\$db)
+\item 
+\hyperlink{interface_common_interface_a57a9dbd1203cf7b3ef3c5ce40d4047cc}{execute\+Query} (\$sql, \$filename)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interface to for the Common\+Methods.\+php file. Include this file in your code instead of the Common\+Methods.\+php file. 
+
+\subsection{Member Function Documentation}
+\index{Common\+Interface@{Common\+Interface}!Common@{Common}}
+\index{Common@{Common}!Common\+Interface@{Common\+Interface}}
+\subsubsection[{\texorpdfstring{Common(\$debug)}{Common($debug)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Common} (
+\begin{DoxyParamCaption}
+\item[{}]{\$debug}
+\end{DoxyParamCaption}
+)}\hypertarget{interface_common_interface_a4a9e6769ab6c946d0895e8d987df1c10}{}\label{interface_common_interface_a4a9e6769ab6c946d0895e8d987df1c10}
+\hyperlink{class_common}{Common} constructor. 
+\begin{DoxyParams}{Parameters}
+{\em \$debug} & The constructor for the \hyperlink{class_common}{Common} class \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_common_a4a9e6769ab6c946d0895e8d987df1c10}{Common}.
+
+\index{Common\+Interface@{Common\+Interface}!connect@{connect}}
+\index{connect@{connect}!Common\+Interface@{Common\+Interface}}
+\subsubsection[{\texorpdfstring{connect(\$db)}{connect($db)}}]{\setlength{\rightskip}{0pt plus 5cm}connect (
+\begin{DoxyParamCaption}
+\item[{}]{\$db}
+\end{DoxyParamCaption}
+)}\hypertarget{interface_common_interface_a1b1bd9b3f45a5fbd2549355282cdc96f}{}\label{interface_common_interface_a1b1bd9b3f45a5fbd2549355282cdc96f}
+
+\begin{DoxyParams}{Parameters}
+{\em \$db} & Uses the \$db class member functions to actually make the connection to the database \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_common_a1b1bd9b3f45a5fbd2549355282cdc96f}{Common}.
+
+\index{Common\+Interface@{Common\+Interface}!execute\+Query@{execute\+Query}}
+\index{execute\+Query@{execute\+Query}!Common\+Interface@{Common\+Interface}}
+\subsubsection[{\texorpdfstring{execute\+Query(\$sql, \$filename)}{executeQuery($sql, $filename)}}]{\setlength{\rightskip}{0pt plus 5cm}execute\+Query (
+\begin{DoxyParamCaption}
+\item[{}]{\$sql, }
+\item[{}]{\$filename}
+\end{DoxyParamCaption}
+)}\hypertarget{interface_common_interface_a57a9dbd1203cf7b3ef3c5ce40d4047cc}{}\label{interface_common_interface_a57a9dbd1203cf7b3ef3c5ce40d4047cc}
+
+\begin{DoxyParams}{Parameters}
+{\em \$sql} & \\
+\hline
+{\em \$filename} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+mixed
+\end{DoxyReturn}
+Uses the sql statement that is passed in and executes the query
+
+Example Code\+: ~\newline
+ \$sql = \char`\"{}\+S\+E\+L\+E\+C\+T C\+O\+U\+N\+T(\+Walker\+Number) F\+R\+O\+M Walker\+Data\char`\"{}; ~\newline
+ \$rs = \$this-\/$>$C\+O\+M\+M\+O\+N-\/$>$execute\+Query(\$sql, \$\+\_\+\+S\+E\+R\+V\+ER\mbox{[}\char`\"{}\+S\+C\+R\+I\+P\+T\+\_\+\+N\+A\+M\+E\char`\"{}\mbox{]}); ~\newline
+ \$row = \$rs-\/$>$fetch(\+P\+D\+O\+::\+F\+E\+T\+C\+H\+\_\+\+A\+S\+S\+O\+C); ~\newline
+ return (int)\$row\mbox{[}\textquotesingle{}C\+O\+U\+N\+T(\+Walker\+Number)\textquotesingle{}\mbox{]}; ~\newline
+ 
+
+Implemented in \hyperlink{class_common_a57a9dbd1203cf7b3ef3c5ce40d4047cc}{Common}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+P\+H\+P Server Code/Common\+Interface.\+php\end{DoxyCompactItemize}

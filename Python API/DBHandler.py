@@ -3,6 +3,7 @@ import mysql.connector
 from mysql.connector import errorcode
 from FileHander import insertToFile, fileIsEmpty
 
+## @file DBHandler.py
 
 def dbConnect():
     """

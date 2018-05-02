@@ -1,0 +1,40 @@
+\hypertarget{_file_hander_8py}{}\section{Python A\+P\+I/\+File\+Hander.py File Reference}
+\label{_file_hander_8py}\index{Python A\+P\+I/\+File\+Hander.\+py@{Python A\+P\+I/\+File\+Hander.\+py}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{_file_hander_8py_ab7d13e5a8df44b1f4d6add9418693b40}{File\+Hander.\+insert\+To\+File} (location, in\+Or\+Out)
+\item 
+def \hyperlink{_file_hander_8py_af57582a34305a06612e712bdcfd1e594}{File\+Hander.\+file\+Is\+Empty} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{File\+Hander.\+py@{File\+Hander.\+py}!file\+Is\+Empty@{file\+Is\+Empty}}
+\index{file\+Is\+Empty@{file\+Is\+Empty}!File\+Hander.\+py@{File\+Hander.\+py}}
+\subsubsection[{\texorpdfstring{file\+Is\+Empty()}{fileIsEmpty()}}]{\setlength{\rightskip}{0pt plus 5cm}def File\+Hander.\+file\+Is\+Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_file_hander_8py_file_af57582a34305a06612e712bdcfd1e594}{}\label{_file_hander_8py_file_af57582a34305a06612e712bdcfd1e594}
+\begin{DoxyVerb}This function checks the data file to see if it is empty.
+It is used by the fileToDB function to send file contents to
+the DB if the file is not empty.
+:return: Boolean - specifies whether or not the file has more to read from
+\end{DoxyVerb}
+ \index{File\+Hander.\+py@{File\+Hander.\+py}!insert\+To\+File@{insert\+To\+File}}
+\index{insert\+To\+File@{insert\+To\+File}!File\+Hander.\+py@{File\+Hander.\+py}}
+\subsubsection[{\texorpdfstring{insert\+To\+File(location, in\+Or\+Out)}{insertToFile(location, inOrOut)}}]{\setlength{\rightskip}{0pt plus 5cm}def File\+Hander.\+insert\+To\+File (
+\begin{DoxyParamCaption}
+\item[{}]{location, }
+\item[{}]{in\+Or\+Out}
+\end{DoxyParamCaption}
+)}\hypertarget{_file_hander_8py_file_ab7d13e5a8df44b1f4d6add9418693b40}{}\label{_file_hander_8py_file_ab7d13e5a8df44b1f4d6add9418693b40}
+\begin{DoxyVerb}This function inserts data read from the Arduino into a text file.
+Each data entry is a line in the text file that contains the entry
+time, location, and type.
+:param location:
+:param inOrOut:
+:return: void
+\end{DoxyVerb}
+ 

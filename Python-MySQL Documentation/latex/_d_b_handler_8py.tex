@@ -1,0 +1,70 @@
+\hypertarget{_d_b_handler_8py}{}\section{Python A\+P\+I/\+D\+B\+Handler.py File Reference}
+\label{_d_b_handler_8py}\index{Python A\+P\+I/\+D\+B\+Handler.\+py@{Python A\+P\+I/\+D\+B\+Handler.\+py}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{_d_b_handler_8py_aeddd5406a1df20642e38e713e451d2ee}{D\+B\+Handler.\+db\+Connect} ()
+\item 
+def \hyperlink{_d_b_handler_8py_a3ab67fb819fdadb77823175aa0fb96c5}{D\+B\+Handler.\+db\+Insert} (location, in\+Or\+Out)
+\item 
+def \hyperlink{_d_b_handler_8py_a55dd8097d29af0695d873d04756d92c2}{D\+B\+Handler.\+file\+To\+DB} ()
+\item 
+def \hyperlink{_d_b_handler_8py_a04a601b6a096ebce8d2d344e7466e47f}{D\+B\+Handler.\+insert} (data\+Mode, location, in\+Or\+Out)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{D\+B\+Handler.\+py@{D\+B\+Handler.\+py}!db\+Connect@{db\+Connect}}
+\index{db\+Connect@{db\+Connect}!D\+B\+Handler.\+py@{D\+B\+Handler.\+py}}
+\subsubsection[{\texorpdfstring{db\+Connect()}{dbConnect()}}]{\setlength{\rightskip}{0pt plus 5cm}def D\+B\+Handler.\+db\+Connect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_d_b_handler_8py_file_aeddd5406a1df20642e38e713e451d2ee}{}\label{_d_b_handler_8py_file_aeddd5406a1df20642e38e713e451d2ee}
+\begin{DoxyVerb}This function attempts to establish a database connection using the specified parameters
+and throws an exception if needed.
+:return: Boolean - specifies whether the connection was successful or not
+\end{DoxyVerb}
+ \index{D\+B\+Handler.\+py@{D\+B\+Handler.\+py}!db\+Insert@{db\+Insert}}
+\index{db\+Insert@{db\+Insert}!D\+B\+Handler.\+py@{D\+B\+Handler.\+py}}
+\subsubsection[{\texorpdfstring{db\+Insert(location, in\+Or\+Out)}{dbInsert(location, inOrOut)}}]{\setlength{\rightskip}{0pt plus 5cm}def D\+B\+Handler.\+db\+Insert (
+\begin{DoxyParamCaption}
+\item[{}]{location, }
+\item[{}]{in\+Or\+Out}
+\end{DoxyParamCaption}
+)}\hypertarget{_d_b_handler_8py_file_a3ab67fb819fdadb77823175aa0fb96c5}{}\label{_d_b_handler_8py_file_a3ab67fb819fdadb77823175aa0fb96c5}
+\begin{DoxyVerb}This functions inserts the data entry that is read in from the Arduino
+into the MySQL database. The entry contains whether the car is entering
+or exiting as well as the lot number.
+:param inOrOut: Boolean - whether the car entered or exited
+:param location: String - specifies which lot we are recording for
+:return: Boolean - specifies whether or not the insert was successful or not
+\end{DoxyVerb}
+ \index{D\+B\+Handler.\+py@{D\+B\+Handler.\+py}!file\+To\+DB@{file\+To\+DB}}
+\index{file\+To\+DB@{file\+To\+DB}!D\+B\+Handler.\+py@{D\+B\+Handler.\+py}}
+\subsubsection[{\texorpdfstring{file\+To\+D\+B()}{fileToDB()}}]{\setlength{\rightskip}{0pt plus 5cm}def D\+B\+Handler.\+file\+To\+DB (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_d_b_handler_8py_file_a55dd8097d29af0695d873d04756d92c2}{}\label{_d_b_handler_8py_file_a55dd8097d29af0695d873d04756d92c2}
+\begin{DoxyVerb}This function reads in the data from the data file that is used to store
+data if a DB connection could not be established and inserts it into the database.
+:return: void
+\end{DoxyVerb}
+ \index{D\+B\+Handler.\+py@{D\+B\+Handler.\+py}!insert@{insert}}
+\index{insert@{insert}!D\+B\+Handler.\+py@{D\+B\+Handler.\+py}}
+\subsubsection[{\texorpdfstring{insert(data\+Mode, location, in\+Or\+Out)}{insert(dataMode, location, inOrOut)}}]{\setlength{\rightskip}{0pt plus 5cm}def D\+B\+Handler.\+insert (
+\begin{DoxyParamCaption}
+\item[{}]{data\+Mode, }
+\item[{}]{location, }
+\item[{}]{in\+Or\+Out}
+\end{DoxyParamCaption}
+)}\hypertarget{_d_b_handler_8py_file_a04a601b6a096ebce8d2d344e7466e47f}{}\label{_d_b_handler_8py_file_a04a601b6a096ebce8d2d344e7466e47f}
+\begin{DoxyVerb}This function handles inserting the data read from the Arduino into either
+the file or the database depending on whether a network connection can be established.
+:param dataMode: Boolean/integer - Whether there is a network connection or not
+:param location: String - specifies which lot we are recording for
+:param inOrOut: Boolean - whether the car entered or exited
+:return: void
+\end{DoxyVerb}
+ 
