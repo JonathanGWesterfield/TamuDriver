@@ -354,7 +354,6 @@ class PHPtoSQL implements PHPtoSQLInterface
         echo("<br><br>"); */
 
         return $locationArray;
-
     }
 
     /**
