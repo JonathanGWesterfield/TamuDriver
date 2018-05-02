@@ -1,0 +1,165 @@
+\hypertarget{fullcounter_8c}{}\section{Arduino Code/fullcounter.c File Reference}
+\label{fullcounter_8c}\index{Arduino Code/fullcounter.\+c@{Arduino Code/fullcounter.\+c}}
+
+
+This class is the code that is run on the Arduino. This file sets up the lcd screen that is used to setup the box when it is deployed, and has the implementation for setting which lot is being recorded at deployment. But most importantly, it is the code that actually uses the sensor to record whether or not a car has passed the sensor. It sends this information to the Raspberry Pi which then sends the information to the database.  
+
+
+{\ttfamily \#include $<$Wire.\+h$>$}\\*
+{\ttfamily \#include $<$Liquid\+Crystal\+\_\+\+I2\+C.\+h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Liquid\+Crystal\+\_\+\+I2C {\bfseries lcd} (0x27, 2, 1, 0, 4, 5, 6, 7, 3, P\+O\+S\+I\+T\+I\+V\+E)\hypertarget{fullcounter_8c_a69505b97a794563ba4b6cd7c11af7f55}{}\label{fullcounter_8c_a69505b97a794563ba4b6cd7c11af7f55}
+
+\item 
+void \hyperlink{fullcounter_8c_a4fc01d736fe50cf5b977f755b675f11d}{setup} ()
+\begin{DoxyCompactList}\small\item\em Setup function which initializes the L\+CD and sets the modes for all necessary pins. \end{DoxyCompactList}\item 
+void \hyperlink{fullcounter_8c_afe461d27b9c48d5921c00d521181f12f}{loop} ()
+\begin{DoxyCompactList}\small\item\em Main loop function which either sets the lot number or reads from the sensors depending on the state of the switch. \end{DoxyCompactList}\item 
+void \hyperlink{fullcounter_8c_ad40ccf803c2eff76d7e0e7a24c9937ef}{read\+Sensors} ()
+\begin{DoxyCompactList}\small\item\em This function reads from the sensors and sends a signal to the serial port for each entry/exit. L\+E\+Ds for each sensor are activated when motion is detected. \end{DoxyCompactList}\item 
+void \hyperlink{fullcounter_8c_a2c5d11d052a516d663e9571db041bf2b}{set\+Lot\+Num} ()
+\begin{DoxyCompactList}\small\item\em This function sets the parking lot number to be used in the database. It uses 2 buttons to set the lot number and a switch to set or \char`\"{}unset\char`\"{} the current lot. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const int {\bfseries button1\+Pin} = 4\hypertarget{fullcounter_8c_a4f40099c2dd0645b871e53ce0700370b}{}\label{fullcounter_8c_a4f40099c2dd0645b871e53ce0700370b}
+
+\item 
+const int {\bfseries button2\+Pin} = 5\hypertarget{fullcounter_8c_a73a6345a84cc3b11e164dbcace03472a}{}\label{fullcounter_8c_a73a6345a84cc3b11e164dbcace03472a}
+
+\item 
+const int {\bfseries switch\+Pin} = 6\hypertarget{fullcounter_8c_aae852fd421ef56bdabc19d7fa7608d90}{}\label{fullcounter_8c_aae852fd421ef56bdabc19d7fa7608d90}
+
+\item 
+int {\bfseries btn1\+State} = 0\hypertarget{fullcounter_8c_a789de85fb265c629ec268428d3d75e62}{}\label{fullcounter_8c_a789de85fb265c629ec268428d3d75e62}
+
+\item 
+int {\bfseries btn2\+State} = 0\hypertarget{fullcounter_8c_a343ea36fbb01094d3a05d06fc9090a3c}{}\label{fullcounter_8c_a343ea36fbb01094d3a05d06fc9090a3c}
+
+\item 
+int {\bfseries prev\+Btn1} = 0\hypertarget{fullcounter_8c_ae2320420c7cb57f65875a6e3bb8b20ee}{}\label{fullcounter_8c_ae2320420c7cb57f65875a6e3bb8b20ee}
+
+\item 
+int {\bfseries prev\+Btn2} = 0\hypertarget{fullcounter_8c_ab3d0907eed1d3583419b83036d3e7fd6}{}\label{fullcounter_8c_ab3d0907eed1d3583419b83036d3e7fd6}
+
+\item 
+int {\bfseries switch\+State} = 0\hypertarget{fullcounter_8c_a57e4ea129f0c267bf3209ac1ee9df821}{}\label{fullcounter_8c_a57e4ea129f0c267bf3209ac1ee9df821}
+
+\item 
+int {\bfseries prev\+Sw\+State} = 0\hypertarget{fullcounter_8c_a9d92a78a619f74822fd67b1d8837d7bc}{}\label{fullcounter_8c_a9d92a78a619f74822fd67b1d8837d7bc}
+
+\item 
+int {\bfseries lot\+Num} = 0\hypertarget{fullcounter_8c_a5d96090337e6c2cfdf0f5cfe42e8000b}{}\label{fullcounter_8c_a5d96090337e6c2cfdf0f5cfe42e8000b}
+
+\item 
+int {\bfseries tens} = 0\hypertarget{fullcounter_8c_a22e5c9570b48a859b955e24a0faee901}{}\label{fullcounter_8c_a22e5c9570b48a859b955e24a0faee901}
+
+\item 
+int {\bfseries ones} = 0\hypertarget{fullcounter_8c_a9b9280dfa921e564598c3ee2058fcec9}{}\label{fullcounter_8c_a9b9280dfa921e564598c3ee2058fcec9}
+
+\item 
+char {\bfseries lot\+Num\+Buf} \mbox{[}16\mbox{]}\hypertarget{fullcounter_8c_acdaa5454f7f1a66e1d4b85a1b7427d5b}{}\label{fullcounter_8c_acdaa5454f7f1a66e1d4b85a1b7427d5b}
+
+\item 
+char {\bfseries serial\+Buf} \mbox{[}10\mbox{]}\hypertarget{fullcounter_8c_a290f075ae1042b9c9e770173d986c760}{}\label{fullcounter_8c_a290f075ae1042b9c9e770173d986c760}
+
+\item 
+int {\bfseries led\+Pin} = 13\hypertarget{fullcounter_8c_afdd77f1aa3023f9ba5f49bb1f6c68b51}{}\label{fullcounter_8c_afdd77f1aa3023f9ba5f49bb1f6c68b51}
+
+\item 
+int {\bfseries led\+Pin2} = 12\hypertarget{fullcounter_8c_aebb9679f02c2142093d8152c0664d87e}{}\label{fullcounter_8c_aebb9679f02c2142093d8152c0664d87e}
+
+\item 
+int {\bfseries input\+Pin1} = 2\hypertarget{fullcounter_8c_aaeaaa8e55dcdd7f6f5cc728ffdd54156}{}\label{fullcounter_8c_aaeaaa8e55dcdd7f6f5cc728ffdd54156}
+
+\item 
+int {\bfseries input\+Pin2} = 3\hypertarget{fullcounter_8c_abdf149d29320014da890b5dfdd157b9b}{}\label{fullcounter_8c_abdf149d29320014da890b5dfdd157b9b}
+
+\item 
+int {\bfseries pir\+State} = L\+OW\hypertarget{fullcounter_8c_a55dff8e63959fc233e6f3158d303c48f}{}\label{fullcounter_8c_a55dff8e63959fc233e6f3158d303c48f}
+
+\item 
+int {\bfseries pir\+State2} = L\+OW\hypertarget{fullcounter_8c_abbc714ce2fd44e2341e568f9abfd1983}{}\label{fullcounter_8c_abbc714ce2fd44e2341e568f9abfd1983}
+
+\item 
+int {\bfseries val} = 0\hypertarget{fullcounter_8c_aa0ccb5ee6d882ee3605ff47745c6467b}{}\label{fullcounter_8c_aa0ccb5ee6d882ee3605ff47745c6467b}
+
+\item 
+int {\bfseries val2} = 0\hypertarget{fullcounter_8c_acc3748d7169a359b540e60b40b6a8956}{}\label{fullcounter_8c_acc3748d7169a359b540e60b40b6a8956}
+
+\item 
+int {\bfseries hit1} = 0\hypertarget{fullcounter_8c_ae2d3c5f9d45188786bd6c62b4a1de2d9}{}\label{fullcounter_8c_ae2d3c5f9d45188786bd6c62b4a1de2d9}
+
+\item 
+int {\bfseries hit2} = 0\hypertarget{fullcounter_8c_a8e4751a4da4c6b6bcedeea1988ede98a}{}\label{fullcounter_8c_a8e4751a4da4c6b6bcedeea1988ede98a}
+
+\item 
+unsigned long {\bfseries timeout}\hypertarget{fullcounter_8c_a639e65bbd749de17060d658eb233f72b}{}\label{fullcounter_8c_a639e65bbd749de17060d658eb233f72b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is the code that is run on the Arduino. This file sets up the lcd screen that is used to setup the box when it is deployed, and has the implementation for setting which lot is being recorded at deployment. But most importantly, it is the code that actually uses the sensor to record whether or not a car has passed the sensor. It sends this information to the Raspberry Pi which then sends the information to the database. 
+
+
+
+\subsection{Function Documentation}
+\index{fullcounter.\+c@{fullcounter.\+c}!loop@{loop}}
+\index{loop@{loop}!fullcounter.\+c@{fullcounter.\+c}}
+\subsubsection[{\texorpdfstring{loop()}{loop()}}]{\setlength{\rightskip}{0pt plus 5cm}void loop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{fullcounter_8c_afe461d27b9c48d5921c00d521181f12f}{}\label{fullcounter_8c_afe461d27b9c48d5921c00d521181f12f}
+
+
+Main loop function which either sets the lot number or reads from the sensors depending on the state of the switch. 
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{fullcounter.\+c@{fullcounter.\+c}!read\+Sensors@{read\+Sensors}}
+\index{read\+Sensors@{read\+Sensors}!fullcounter.\+c@{fullcounter.\+c}}
+\subsubsection[{\texorpdfstring{read\+Sensors()}{readSensors()}}]{\setlength{\rightskip}{0pt plus 5cm}void read\+Sensors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{fullcounter_8c_ad40ccf803c2eff76d7e0e7a24c9937ef}{}\label{fullcounter_8c_ad40ccf803c2eff76d7e0e7a24c9937ef}
+
+
+This function reads from the sensors and sends a signal to the serial port for each entry/exit. L\+E\+Ds for each sensor are activated when motion is detected. 
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{fullcounter.\+c@{fullcounter.\+c}!set\+Lot\+Num@{set\+Lot\+Num}}
+\index{set\+Lot\+Num@{set\+Lot\+Num}!fullcounter.\+c@{fullcounter.\+c}}
+\subsubsection[{\texorpdfstring{set\+Lot\+Num()}{setLotNum()}}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Lot\+Num (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{fullcounter_8c_a2c5d11d052a516d663e9571db041bf2b}{}\label{fullcounter_8c_a2c5d11d052a516d663e9571db041bf2b}
+
+
+This function sets the parking lot number to be used in the database. It uses 2 buttons to set the lot number and a switch to set or \char`\"{}unset\char`\"{} the current lot. 
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{fullcounter.\+c@{fullcounter.\+c}!setup@{setup}}
+\index{setup@{setup}!fullcounter.\+c@{fullcounter.\+c}}
+\subsubsection[{\texorpdfstring{setup()}{setup()}}]{\setlength{\rightskip}{0pt plus 5cm}void setup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{fullcounter_8c_a4fc01d736fe50cf5b977f755b675f11d}{}\label{fullcounter_8c_a4fc01d736fe50cf5b977f755b675f11d}
+
+
+Setup function which initializes the L\+CD and sets the modes for all necessary pins. 
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}

@@ -1,0 +1,30 @@
+\begin{theindex}
+
+  \item {Arduino Code/fullcounter.\+c}, \hyperpage{3}
+
+  \indexspace
+
+  \item {fullcounter.\+c}
+    \subitem {loop}, \hyperpage{4}
+    \subitem {read\+Sensors}, \hyperpage{4}
+    \subitem {set\+Lot\+Num}, \hyperpage{4}
+    \subitem {setup}, \hyperpage{5}
+
+  \indexspace
+
+  \item {loop}
+    \subitem {fullcounter.\+c}, \hyperpage{4}
+
+  \indexspace
+
+  \item {read\+Sensors}
+    \subitem {fullcounter.\+c}, \hyperpage{4}
+
+  \indexspace
+
+  \item {set\+Lot\+Num}
+    \subitem {fullcounter.\+c}, \hyperpage{4}
+  \item {setup}
+    \subitem {fullcounter.\+c}, \hyperpage{5}
+
+\end{theindex}
