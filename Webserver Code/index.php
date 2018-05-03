@@ -28,7 +28,7 @@
 		
 		<!-- Controls for chart data + loading bar. -->
 		<form id="chart-control">
-		<fieldset><legend>Chart Controls</legend>
+		<fieldset><legend>Data Controls</legend>
 			<label for="mode-select">View by:</label>
 			<select id="mode-select" name="mode-select">
 				<option value="Day">Day</option>
@@ -63,6 +63,43 @@
 			<input type="reset" id="regression-clear" value="Clear" />
 		</fieldset>
 		</form>
+	</div>
+	</div>
+
+	<div class="card bg-light">
+	<div class="card-header">Instructions</div>
+	<div class="card-body">
+		<h5 class="card-title">Data controls</h5>
+		<p class="card-text"><em>These tools give you control over what data is displayed on the chart.</em></p>
+		<dl class="row">
+			<dt class="col-sm-3">View by: <em>mode</em></dt>
+			<dd class="col-sm-9">Changes how data is broken up. For example, viewing by day will show all traffic for the given day, broken up by hour.</dd>
+
+			<dt class="col-sm-3">Date: <em>dd/mm/yyyy</em></dt>
+			<dd class="col-sm-9">Changes the date you are viewing. Note: If you are viewing (for example) by year, then changing the day/month will have no effect.</dd>
+
+			<dt class="col-sm-3">Submit</dt>
+			<dd class="col-sm-9">After making any changes, make sure to click the submit button.</dd>
+		</dl>
+
+		<h5 class="card-title">Regression controls</h5>
+		<p class="card-text"><em>These tools allow you to add and modify a best-fit polynomial line over a particular dataset.</em></p>
+		<dl class="row">
+			<dt class="col-sm-3">Dataset: <em>choice</em></dt>
+			<dd class="col-sm-9">This allows you to choose a dataset to work with.</dd>
+
+			<dt class="col-sm-3">Start/End: <em>time</em></dt>
+			<dd class="col-sm-9">These options allow you to specify a range for your data. Any data before <em>start</em> or after <em>end</em> will not be used to generate the regression line.</dd>
+			
+			<dt class="col-sm-3">Polynomial order: <em>number</em></dt>
+			<dd class="col-sm-9">Specifies the polynomial order for the best-fit line. For example, if you wanted to display a porabola, you would select 2 as your order.</dd>
+
+			<dt class="col-sm-3">Add</dt>
+			<dd class="col-sm-9">Add the regression line to the chart. Note: If a regression line is already present, it will be replaced with the new one. Also note, if changes are made in "Data controls", you will not see a difference in the regression line until clicking "Add" again.</dd>
+
+			<dt class="col-sm-3">Clear</dt>
+			<dd class="col-sm-9">Removes the regression line from the chart. Does nothing if there is no regression line.</dd>
+		</dl>
 	</div>
 	</div>
 
