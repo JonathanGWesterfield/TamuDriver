@@ -1,0 +1,5 @@
+This is the Tamu Driver project for Jonathan Westerfield, Jonathan Beechner, and Joel Coatney. This project has 
+all of the source code for a box that will allow a user to build a box that can record the amount of cars 
+entering and exiting a parking lot or multiple parking lots.
+
+Also include the source files for the web front end that allows you to visualize the data on a line graph with the ability to add a regression line to the graph.
