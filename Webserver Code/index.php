@@ -75,7 +75,7 @@
 			<dt class="col-sm-3">View by: <em>mode</em></dt>
 			<dd class="col-sm-9">Changes how data is broken up. For example, viewing by day will show all traffic for the given day, broken up by hour.</dd>
 
-			<dt class="col-sm-3">Date: <em>dd/mm/yyyy</em></dt>
+			<dt class="col-sm-3">Date: <em>mm/dd/yyyy</em></dt>
 			<dd class="col-sm-9">Changes the date you are viewing. Note: If you are viewing (for example) by year, then changing the day/month will have no effect.</dd>
 
 			<dt class="col-sm-3">Submit</dt>
