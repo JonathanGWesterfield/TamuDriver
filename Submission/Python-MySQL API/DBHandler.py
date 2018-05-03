@@ -16,10 +16,10 @@ def dbConnect():
 
     try:
         config = {
-            'user': 'jgwesterfield',
+            'user': 'XXXXX',
             'password': 'Whoop19!',
             'host': 'database.cse.tamu.edu',
-            'database': 'jgwesterfield-TamuDriver',
+            'database': 'XXXXX-TamuDriver',
             'raise_on_warnings': True,
         }
 
